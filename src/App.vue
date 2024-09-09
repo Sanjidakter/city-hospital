@@ -1,26 +1,83 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <NavBar />
+  <router-view />
+  <FooterElement />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FooterElement from "./components/Shared/FooterElement.vue";
+import NavBar from "./components/Shared/NavBar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    NavBar,
+    FooterElement,
+  },
+  data() {
+    return {
+      widgets: [], // Ensure widgets is defined in the data object
+    };
+  },
+  async mounted() {
+    // Call fetchData when the component is mounted
+    await this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const storedWidgets = localStorage.getItem("widgets");
+
+        console.log("Fetching data from API...");
+        const baseUrl = process.env.APP_BASE_API_URL;
+        let proxyUrl = "https://api.allorigins.win/raw?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/website/website_api/settings?access_key=123456789`
+          );
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Compare API data with localStorage data
+        if (storedWidgets) {
+          const parsedWidgets = JSON.parse(storedWidgets);
+
+          // Compare stringified versions of the data to avoid deep object comparison
+          if (JSON.stringify(parsedWidgets) !== JSON.stringify(data.widgets)) {
+            console.log("Data has changed, updating localStorage...");
+            localStorage.setItem("widgets", JSON.stringify(data.widgets));
+            this.widgets = data.widgets;
+          } else {
+            console.log("Data is the same as in localStorage, no update needed.");
+            this.widgets = parsedWidgets;
+          }
+        } else {
+          // If no data in localStorage, set it
+          console.log("No data in localStorage, setting new data...");
+          localStorage.setItem("widgets", JSON.stringify(data.widgets));
+          this.widgets = data.widgets;
+        }
+
+        this.extractMenuItems();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
