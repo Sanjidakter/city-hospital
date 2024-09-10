@@ -1,0 +1,26 @@
+components in homepage in website:
+ featured-services
+about
+services
+call-to-action
+stats section
+doctors
+latest news
+latest-service
+gallery
+FAQ
+testimonials
+
+
+Component Name:
+0 FeaturedHomeSection
+1 AboutHomeSection
+2 ServiceHomeSection
+3 CalltoActionHomeSection
+4 StatsHomeSection
+5 DoctorsHomeSection
+6 LatestNewsHomeSection
+7 LatestServiceHomeSection
+8 GalleryHomeSection
+9 FaqHomeSection
+10 TestimonialsHomeSection

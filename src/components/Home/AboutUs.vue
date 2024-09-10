@@ -42,6 +42,6 @@
 
 <script>
 export default{
-    name:"AboutSection",
+    name:"AboutUs",
 }
 </script>

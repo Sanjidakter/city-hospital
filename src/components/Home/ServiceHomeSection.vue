@@ -86,6 +86,6 @@
 
 <script>
 export default{
-    name:"ServicesSection"
+    name:"ServiceHomeSection"
 }
 </script>

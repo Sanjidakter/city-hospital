@@ -1,6 +1,5 @@
 <template>
     <div class="slider-container">
-      <h1>Slider</h1>
       <!-- {{ sliderItems }} -->
       <div
         v-if="sliderItems.length > 0"

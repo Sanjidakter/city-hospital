@@ -1,5 +1,6 @@
 <template>
   <NavBar />
+  <!-- <MainComponent componentName="DynamicSection" /> -->
   <router-view />
   <FooterElement />
 </template>
@@ -7,10 +8,12 @@
 <script>
 import FooterElement from "./components/Shared/FooterElement.vue";
 import NavBar from "./components/Shared/NavBar.vue";
+// import MainComponent from "./components/MainComponent.vue";
 
 export default {
   name: "App",
   components: {
+    // MainComponent,
     NavBar,
     FooterElement,
   },
@@ -29,7 +32,7 @@ export default {
         const storedWidgets = localStorage.getItem("widgets");
 
         console.log("Fetching data from API...");
-        const baseUrl = process.env.APP_BASE_API_URL;
+        const baseUrl = "http://cityhospital.techecosys.net";
         let proxyUrl = "https://api.allorigins.win/raw?url=";
         let url =
           proxyUrl +
@@ -61,7 +64,9 @@ export default {
             localStorage.setItem("widgets", JSON.stringify(data.widgets));
             this.widgets = data.widgets;
           } else {
-            console.log("Data is the same as in localStorage, no update needed.");
+            console.log(
+              "Data is the same as in localStorage, no update needed."
+            );
             this.widgets = parsedWidgets;
           }
         } else {
@@ -70,8 +75,6 @@ export default {
           localStorage.setItem("widgets", JSON.stringify(data.widgets));
           this.widgets = data.widgets;
         }
-
-        this.extractMenuItems();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -79,5 +82,3 @@ export default {
   },
 };
 </script>
-
-

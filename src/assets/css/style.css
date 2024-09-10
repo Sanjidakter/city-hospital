@@ -1896,7 +1896,10 @@ section,
 }
 
 
-
+.homepage-bg{
+  color: #df1529;
+  
+}
 .news .news_title h3{
   font-size:18px;
   font-weight:bold;
