@@ -5,19 +5,21 @@
         <div
           class="container position-relative d-flex align-items-center justify-content-end"
         >
-        <!-- {{ menuItems }} -->
           <nav id="navmenu" class="navmenu d-flex align-items-center me-auto">
             <ul>
               <!-- Loop through menu items -->
-              <li v-for="item in menuItems" :key="item.id" class="nav-item" :class="{ dropdown: item.children && item.children.length > 0 }">
+              <li
+                v-for="item in menuItems"
+                :key="item.id"
+                class="nav-item"
+                :class="{ dropdown: item.children && item.children.length > 0 }"
+              >
                 <!-- If the item has children, show dropdown -->
                 <template v-if="item.children && item.children.length > 0">
                   <a
                     href="#"
                     class="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    role="button"
-                    aria-expanded="false"
+                    @click.prevent="toggleDropdown"
                   >
                     {{ item.label }}
                   </a>
@@ -34,9 +36,9 @@
 
                 <!-- Otherwise, show a regular menu item -->
                 <template v-else>
-                  <router-link :to="`/${item.link}`" class="nav-link">{{
-                    item.label
-                  }}</router-link>
+                  <router-link :to="`/${item.link}`" class="nav-link">
+                    {{ item.label }}
+                  </router-link>
                 </template>
               </li>
             </ul>
@@ -47,8 +49,9 @@
           <a
             class="cta-btn btn_white"
             href="http://cityhospital.techecosys.net//post/110/our-doctors"
-            >Find a Doctor</a
           >
+            Find a Doctor
+          </a>
         </div>
       </div>
     </div>
@@ -64,77 +67,79 @@ export default {
       menuItems: [], // Array to hold menu items
     };
   },
-  methods: {
-    // async fetchData() {
-    //   try {
-    //     const storedWidgets =localStorage.getItem("widgets");
-
-    //     if (storedWidgets) {
-    //       console.log("Loaded from localStorage");
-    //      this.widgets = JSON.parse(storedWidgets);
-    //     } else {
-    //       console.log("Fetching data from API...");
-    //       const baseUrl = process.env.VUE_APP_BASE_API_URL;
-    //       let proxyUrl = "https://api.allorigins.win/raw?url=";
-    //       let url =
-    //         proxyUrl +
-    //         encodeURIComponent(
-    //           `${baseUrl}/website/website_api/settings?access_key=123456789`
-    //         );
-
-    //       const response = await fetch(url, {
-    //         method: "GET",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Accept: "application/json",
-    //         },
-    //       });
-
-    //       if (!response.ok) {
-    //         throw new Error(`HTTP error! Status: ${response.status}`);
-    //       }
-
-    //       const data = await response.json();
-    //       this.widgets = data.widgets;
-    //       localStorage.setItem("widgets", JSON.stringify(this.widgets));
-    //      // this.extractMenuItems();
-    //     }
- 
-    //       this.extractMenuItems();
-
-
-
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // },
-    // extractMenuItems() {
-    //   if (this.widgets && this.widgets.menu && this.widgets.menu.main_menu) {
-    //     this.menuItems = this.widgets.menu.main_menu.map((item) => ({
-    //       id: item.id,
-    //       alias: item.alias,
-    //       link:item.link,
-    //       label: item.label,
-    //       url: `${item.url}${item.link}`,
-    //       children: item.children || [], // Include children for dropdown
-    //     }));
-    //   }
-    // },
-  },
   mounted() {
-    //this.fetchData();
-    const storedWidgets =localStorage.getItem("widgets");
-    this.widgets = JSON.parse(storedWidgets);
-    if (this.widgets && this.widgets.menu && this.widgets.menu.main_menu) {
-        this.menuItems = this.widgets.menu.main_menu.map((item) => ({
-          id: item.id,
-          alias: item.alias,
-          link:item.link,
-          label: item.label,
-          url: `${item.url}${item.link}`,
-          children: item.children || [], // Include children for dropdown
-        }));
-      }
+    this.loadMenuItems();
+    this.initializeMobileMenu();
   },
+  methods: {
+    loadMenuItems() {
+      const storedWidgets = localStorage.getItem("widgets");
+      if (storedWidgets) {
+        this.widgets = JSON.parse(storedWidgets);
+        if (this.widgets && this.widgets.menu && this.widgets.menu.main_menu) {
+          this.menuItems = this.widgets.menu.main_menu.map((item) => ({
+            id: item.id,
+            alias: item.alias,
+            link: item.link,
+            label: item.label,
+            url: `${item.url}${item.link}`,
+            children: item.children || [], // Include children for dropdown
+          }));
+        }
+      }
+    },
+    initializeMobileMenu() {
+      // Mobile nav toggle
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+      if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.addEventListener('click', this.mobileNavToggle);
+      }
+
+      // Hide mobile nav on same-page/hash links
+      document.querySelectorAll('#navmenu a').forEach(navmenu => {
+        navmenu.addEventListener('click', () => {
+          if (document.querySelector('body').classList.contains('mobile-nav-active')) {
+            this.mobileNavToggle();
+          }
+        });
+      });
+    },
+    mobileNavToggle() {
+      document.querySelector('body').classList.toggle('mobile-nav-active');
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+      if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.classList.toggle('bi-x');
+        mobileNavToggleBtn.classList.toggle('bi-list');
+      }
+    },
+    toggleDropdown(event) {
+      event.preventDefault();
+      const dropdownMenu = event.currentTarget.nextElementSibling;
+      if (dropdownMenu) {
+        dropdownMenu.classList.toggle('dropdown-active');
+      }
+    }
+  }
 };
 </script>
+
+<style scoped>
+/* Add styles for dropdowns and mobile nav toggle */
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown-menu.dropdown-active {
+  display: block;
+}
+
+/* Mobile nav active styles */
+body.mobile-nav-active .navmenu {
+  /* Adjust styles for active mobile nav menu */
+}
+
+/* Mobile nav toggle icon styles */
+.mobile-nav-toggle.bi-x {
+  /* Adjust styles for close icon */
+}
+</style>

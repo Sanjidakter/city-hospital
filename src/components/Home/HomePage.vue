@@ -68,19 +68,19 @@ export default {
   },
   methods: {
   async getComponent(widget_element_path) {
-    console.log(`Getting the component for path: ${widget_element_path}`);
+    // console.log(`Getting the component for path: ${widget_element_path}`);
 
     try {
       // Dynamically import the component using the provided widget_element_path
       const component = await import(`./${widget_element_path}.vue`);
-      console.log(`Component imported successfully:`, component);
+      // console.log(`Component imported successfully:`, component);
 
       // Check if component has default export
       if (component.default) {
-        console.log('Rendering component:', component.default);
+        // console.log('Rendering component:', component.default);
         return component.default;
       } else {
-        console.warn('No default export found, falling back to DefaultSection');
+        // console.warn('No default export found, falling back to DefaultSection');
         return DefaultSection;
       }
     } catch (error) {

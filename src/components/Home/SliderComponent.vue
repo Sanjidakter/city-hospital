@@ -1,48 +1,46 @@
 <template>
-  <div id="hero">
-    <!-- {{ sliderItems }} -->
+  <section id="hero" class="hero section">
     <div
-      v-if="sliderItems.length > 0"
-      id="carouselExampleControls"
+      id="hero-carousel"
       class="carousel slide carousel-fade"
       data-bs-ride="carousel"
       data-bs-interval="5000"
     >
-      <div class="carousel-inner">
-        <div
-          v-for="(item, index) in sliderItems"
-          :key="item.id"
-          class="carousel-item"
-          :class="{ active: index === 0 }"
-        >
-          <!-- Correctly set the image source here -->
-          <img :src="item.imageUrl" class="d-block w-100" :alt="item.title" />
-          <div class="carousel-caption d-none d-md-block bg-white text-black">
-            <h5>{{ item.title }}</h5>
-            <p>{{ item.alias }}</p>
-            <a :href="item.url" class="btn btn-primary">Read More</a>
-          </div>
-        </div>
+      <div
+        v-for="(item, index) in sliderItems"
+        :key="item.id"
+        class="carousel-item"
+        :class="{ active: index === 0 }"
+      >
+        <!-- Image with correct binding -->
+        <img :src="item.imageUrl" class="d-block w-100" :alt="item.title" />
       </div>
+      =
 
-      <button
+      <a
         class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleControls"
+        href="#hero-carousel"
+        role="button"
         data-bs-slide="prev"
       >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
+        <span
+          class="carousel-control-prev-icon bi bi-chevron-left"
+          aria-hidden="true"
+        ></span>
+      </a>
+
+      <a
         class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleControls"
+        href="#hero-carousel"
+        role="button"
         data-bs-slide="next"
       >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+        <span
+          class="carousel-control-next-icon bi bi-chevron-right"
+          aria-hidden="true"
+        ></span>
+      </a>
+
       <ol class="carousel-indicators">
         <li
           data-bs-target="#hero-carousel"
@@ -54,7 +52,7 @@
         <li data-bs-target="#hero-carousel" data-bs-slide-to="2" class=""></li>
       </ol>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -102,6 +100,7 @@ export default {
           } else {
             console.error("Slider data is missing or malformed in widgets");
           }
+          console.log(this.sliderItems);
         } catch (error) {
           console.error("Error parsing widgets from localStorage:", error);
         }
@@ -120,7 +119,7 @@ export default {
 }
 
 .carousel-item img {
-  height: 500px;
+  height: 100%;
   object-fit: cover;
 }
 </style>
