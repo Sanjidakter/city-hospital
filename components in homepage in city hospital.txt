@@ -24,3 +24,16 @@ Component Name:
 8 GalleryHomeSection
 9 FaqHomeSection
 10 TestimonialsHomeSection
+
+/******Links to be Added******/
+
+Button with no re-direct link in homepage sections:
+call to action : make an appointment 
+DoctorsHomeSection: All Departments
+LatestNewsHomeSection: All news
+LatestServiceHomeSection: All services
+HeaderPart: Call for appointment
+
+/*********Menu dropdown without Links***********/
+Services -> 
+1. D

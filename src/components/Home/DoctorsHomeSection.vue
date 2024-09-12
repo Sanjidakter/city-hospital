@@ -1,13 +1,13 @@
 <template>
     <section id="doctors" class="doctors section light-background">
         <!-- Section Title -->
-        <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <div class="container section-title aos-init " data-aos="fade-up">
             <h2>Departments Doctors</h2>
             <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
         </div><!-- End Section Title -->
         <div class="container">
             <div class="row gy-4">
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -20,7 +20,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -33,7 +33,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -46,7 +46,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -59,7 +59,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -72,7 +72,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -85,7 +85,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -98,7 +98,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -111,7 +111,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -124,7 +124,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -137,7 +137,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <a href="#">
                         <div class="team_mamber text-center py-4">
                             <div class="team_img p-2">
@@ -150,7 +150,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <div class=" pt-5">
                         <div class="text-center pt-4  ">
                             <a href="#" class="btn ">All Departments</a>

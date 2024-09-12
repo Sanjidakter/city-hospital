@@ -1,7 +1,7 @@
 <template>
   <section id="news" class="news section">
     <div
-      class="container section-title aos-init aos-animate"
+      class="container section-title aos-init "
       data-aos="fade-up"
     >
       <h2>Latest News</h2>
@@ -13,7 +13,7 @@
     <!-- End Section Title -->
     <div class="container">
       <div class="row gp-4">
-        <div class="col-lg-4 col-md-4 aos-init aos-animate" data-aos="fade-up">
+        <div class="col-lg-4 col-md-4 aos-init " data-aos="fade-up">
           <div class="news_section">
             <div class="image_section">
               <img
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-4 aos-init aos-animate" data-aos="fade-up">
+        <div class="col-lg-4 col-md-4 aos-init " data-aos="fade-up">
           <div class="news_section">
             <div class="image_section">
               <img
@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-4 aos-init aos-animate" data-aos="fade-up">
+        <div class="col-lg-4 col-md-4 aos-init " data-aos="fade-up">
           <div class="news_section">
             <div class="image_section">
               <img

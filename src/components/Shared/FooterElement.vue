@@ -1,13 +1,13 @@
 <template>
     <footer class="">
-      <footer id="footer" class="footer light-background">
-        <div class="container footer-top">
+      <footer id="footer" class="footer bg-light text-dark">
+        <div class="container pt-5">
           <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
               <a href="index.html" class="logo d-flex align-items-center">
                 <span class="sitename">City Hospital Limited</span>
               </a>
-              <div class="footer-contact pt-3">
+              <div class="footer-contact mb-1 pt-3">
                 <p>1/8, Block-E, Lalmatia, Satmosjid</p>
                 <p>Road, Mohammadpur, Dhaka - 1207.</p>
                 <p class="mt-3">
@@ -97,127 +97,5 @@
       name: "FooterElement",
     };
   </script>
-  
-  <style scoped>
-  
-  
-  /*--------------------------------------------------------------
-  # Global Footer
-  --------------------------------------------------------------*/
-  .footer {
-      color: #444444;
-      background-color: #f7fcfc;
-      font-size: 14px;
-      position: relative;
-  }
-  
-  .footer .footer-top {
-      padding-top: 50px;
-  }
-  
-  .footer .footer-about .logo {
-      line-height: 1;
-      margin-bottom: 25px;
-  }
-  
-  .footer .footer-about .logo img {
-      max-height: 40px;
-      margin-right: 6px;
-  }
-  
-  .footer .footer-about .logo span {
-      color: var(--heading-color);
-      font-family: var(--heading-font);
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 1px;
-  }
-  
-  .footer .footer-about p {
-      /*font-size: 14px;*/
-      font-family: var(--heading-font);
-  }
-  
-  .footer .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
-      font-size: 16px;
-      color: color-mix(in srgb, var(--default-color), transparent 20%);
-      margin-right: 10px;
-      transition: 0.3s;
-  }
-  
-  .footer .social-links a:hover {
-      color: var(--accent-color);
-      border-color: var(--accent-color);
-  }
-  
-  .footer h4 {
-      font-size: 16px;
-      font-weight: bold;
-      position: relative;
-      padding-bottom: 12px;
-  }
-  
-  .footer .footer-links {
-      margin-bottom: 30px;
-  }
-  
-  .footer .footer-links ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-  }
-  
-  .footer .footer-links ul i {
-      padding-right: 2px;
-      font-size: 12px;
-      line-height: 0;
-  }
-  
-  .footer .footer-links ul li {
-      padding: 10px 0;
-      display: flex;
-      align-items: center;
-  }
-  
-  .footer .footer-links ul li:first-child {
-      padding-top: 0;
-  }
-  
-  .footer .footer-links ul a {
-      color: color-mix(in srgb, var(--default-color), transparent 30%);
-      display: inline-block;
-      line-height: 1;
-  }
-  
-  .footer .footer-links ul a:hover {
-      color: var(--accent-color);
-  }
-  
-  .footer .footer-contact p {
-      margin-bottom: 5px;
-  }
-  
-  .footer .copyright {
-      padding: 25px 0;
-      border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-  }
-  
-  .footer .copyright p {
-      margin-bottom: 0;
-  }
-  
-  .footer .credits {
-      margin-top: 8px;
-      font-size: 13px;
-  }
-  
-  </style>
   
   

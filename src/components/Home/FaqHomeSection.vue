@@ -2,7 +2,7 @@
   <section id="faq" class="faq section light-background">
     <!-- Section Title -->
     <div
-      class="container section-title aos-init aos-animate"
+      class="container section-title aos-init "
       data-aos="fade-up"
     >
       <h2>Frequently Asked Questions</h2>
@@ -16,7 +16,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div
-          class="col-lg-10 aos-init aos-animate"
+          class="col-lg-10 aos-init "
           data-aos="fade-up"
           data-aos-delay="100"
         >

@@ -1,5 +1,7 @@
 <template>
- <div class="container">
+  <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+    <h2>Latest Services</h2>
+    <p class="text-black">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
   <swiper
     :slidesPerView="3"
     :spaceBetween="20"
@@ -16,7 +18,7 @@
   >
     <swiper-slide v-for="(slide, index) in slides" :key="index">
       <div class="testimonial-item">
-        <div class="news_section">
+        <div class="news_section ">
           <div class="image_section">
             <img class="img-fluid" :src="slide.image" alt="alt" />
           </div>

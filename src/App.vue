@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import  AOS  from "aos";
+import "aos/dist/aos.css";
 import FooterElement from "./components/Shared/FooterElement.vue";
 import NavBar from "./components/Shared/NavBar.vue";
 // import MainComponent from "./components/MainComponent.vue";
@@ -25,6 +27,18 @@ export default {
   async mounted() {
     // Call fetchData when the component is mounted
     await this.fetchData();
+
+    // Initialize AOS after the component is mounted
+    AOS.init({
+      duration: 600, // Customize the duration of animations
+      easing: "ease-in-out", // Customize the easing function
+      once: true, // Animations will occur only once
+      mirror: false, // Disable animation when scrolling back
+    });
+    console.log("AOS Initialized");
+  },
+  updated() {
+    AOS.refresh(); // Refresh AOS on component updates
   },
   methods: {
     async fetchData() {

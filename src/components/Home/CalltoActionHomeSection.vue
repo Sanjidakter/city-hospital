@@ -2,7 +2,7 @@
     <section id="call-to-action" class="call-to-action section accent-background section-call-to-action">
       <div class="container">
         <div
-          class="row justify-content-center aos-init aos-animate"
+          class="row justify-content-center aos-init "
           data-aos="zoom-in"
           data-aos-delay="100"
         >

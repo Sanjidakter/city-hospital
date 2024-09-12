@@ -2,7 +2,7 @@
     <section id="featured-services" class="featured-services section">
       <!-- Section Title -->
       <div
-        class="container section-title aos-init aos-animate"
+        class="container section-title aos-init "
         data-aos="fade-up"
       >
         <h2>WHY CHOOSE City Hospital?<br /></h2>
@@ -11,7 +11,7 @@
       <div class="container">
         <div class="row gy-4">
           <div
-            class="col-xl-3 col-md-6 d-flex aos-init aos-animate"
+            class="col-xl-3 col-md-6 d-flex aos-init "
             data-aos="fade-up"
             data-aos-delay="100"
           >
@@ -29,7 +29,7 @@
           <!-- End Service Item -->
   
           <div
-            class="col-xl-3 col-md-6 d-flex aos-init aos-animate"
+            class="col-xl-3 col-md-6 d-flex aos-init "
             data-aos="fade-up"
             data-aos-delay="200"
           >
@@ -48,7 +48,7 @@
           <!-- End Service Item -->
   
           <div
-            class="col-xl-3 col-md-6 d-flex aos-init aos-animate"
+            class="col-xl-3 col-md-6 d-flex aos-init "
             data-aos="fade-up"
             data-aos-delay="300"
           >
@@ -65,7 +65,7 @@
           </div>
           <!-- End Service Item -->
           <div
-            class="col-xl-3 col-md-6 d-flex aos-init aos-animate"
+            class="col-xl-3 col-md-6 d-flex aos-init "
             data-aos="fade-up"
             data-aos-delay="400"
           >

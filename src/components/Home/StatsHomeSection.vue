@@ -1,7 +1,7 @@
 <template>
     <section id="stats" class="stats section">
       <div
-        class="container aos-init aos-animate"
+        class="container aos-init "
         data-aos="fade-up"
         data-aos-delay="100"
       >
