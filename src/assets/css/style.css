@@ -1094,9 +1094,9 @@ section,
   background: none;
   font-size: 26px;
   line-height: 0;
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
+  background: color-mix(in srgb, #444444, transparent 90%);
   border-radius: 50px;
-  color: var(--contrast-color);
+  color: #ffffff;
   transition: 0.3s;
   width: 54px;
   height: 54px;
@@ -1125,13 +1125,13 @@ section,
 .hero .carousel-control-prev:hover .carousel-control-prev-icon,
 .hero .carousel-control-next:hover .carousel-control-next-icon,
 .hero .carousel-control-next:hover .carousel-control-prev-icon {
-  background: var(--accent-color);
-  color: var(--contrast-color);
+  background: #198754;
+  color: #ffffff;
 }
 
 .hero .carousel-indicators li {
   cursor: pointer;
-  background: var(--contrast-color);
+  background: #ffffff;
   overflow: hidden;
   border: 0;
   width: 12px;
@@ -1143,7 +1143,7 @@ section,
 
 .hero .carousel-indicators li.active {
   opacity: 1;
-  background: var(--accent-color);
+  background: #00a550;
 }
 
 /*--------------------------------------------------------------
