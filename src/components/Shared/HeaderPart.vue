@@ -29,14 +29,14 @@
                       :key="child.id"
                       class="dropdown-item"
                     >
-                      <router-link :to="`/${child.link}`">{{ child.label }}</router-link>
+                      <router-link :to="`/${child.link}`" @click="closeMobileMenu">{{ child.label }}</router-link>
                     </li>
                   </ul>
                 </template>
 
                 <!-- Otherwise, show a regular menu item -->
                 <template v-else>
-                  <router-link :to="`/${item.link}`" class="nav-link">
+                  <router-link :to="`/${item.link}`" class="nav-link" @click="closeMobileMenu">
                     {{ item.label }}
                   </router-link>
                 </template>
@@ -109,9 +109,18 @@ export default {
       const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
       if (mobileNavToggleBtn) {
         mobileNavToggleBtn.classList.toggle('bi-x');
-        mobileNavToggleBtn.classList.toggle('bi-list');
+        mobileNavToggleBtn.classList.toggle('bi-');
       }
     },
+    closeMobileMenu() {
+  console.log('Menu item clicked');
+  document.querySelector('body').classList.remove('mobile-nav-active');
+  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  if (mobileNavToggleBtn) {
+    mobileNavToggleBtn.classList.remove('bi-x');
+    mobileNavToggleBtn.classList.add('bi-list');
+  }
+},
     toggleDropdown(event) {
       event.preventDefault();
       const dropdownMenu = event.currentTarget.nextElementSibling;
