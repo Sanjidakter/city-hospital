@@ -1,3 +1,4 @@
+import ContactUs from "@/components/ContactUs.vue";
 import HomePage from "@/components/Home/HomePage.vue";
 import DynamicPage from "@/views/DynamicPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
@@ -5,6 +6,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   { path: "/", component: HomePage },
+  { path: "/contact-us", component: ContactUs },
   { path: "/:alias", component: DynamicPage, props:true },
   ];
 

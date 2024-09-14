@@ -25,7 +25,7 @@
     </div>
 
     <!-- Display the matching item details -->
-    <div v-if="matchingItem">
+    <div class="container" v-if="matchingItem">
       <!-- Display the fetched fulltext content -->
       <div v-html="fetchedContent"></div>
     </div>
@@ -43,62 +43,64 @@ export default {
     };
   },
   async mounted() {
-    const storedWidgets = localStorage.getItem("widgets");
-
-    if (storedWidgets) {
-      try {
-        const widgets = JSON.parse(storedWidgets);
-
-        if (widgets && widgets.menu && widgets.menu.main_menu) {
-          const childrenItemsArray = widgets.menu.main_menu.flatMap(
-            (item) => item.children || []
-          );
-
-          const baseUrl = "http://cityhospital.techecosys.net";
-          let proxyUrl = "https://api.allorigins.win/raw?url=";
-          this.childrenItems = childrenItemsArray.map((child) => ({
-            id: child.id,
-            parentId: child.parentId,
-            alias: child.alias,
-            label: child.label,
-            link: child.link,
-            url :
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/website/website_api/content/${child.link}?access_key=123456789&debug=1`
-          ),
-            // url: `http://cityhospital.techecosys.net/website/website_api/content/${child.link}?access_key=123456789&debug=1`,
-          }));
-
-          console.log("Children Items:", this.childrenItems);
-
-          this.matchingItem = this.childrenItems.find((child) => {
-            console.log("Child Link:", child.link);
-            console.log("Route Alias:", this.$route.params.alias);
-            return child.link === this.$route.params.alias;
-          });
-
-          console.log("Matching Item:", this.matchingItem);
-
-          if (this.matchingItem && this.matchingItem.url) {
-            try {
-              const response = await fetch(this.matchingItem.url);
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              const jsonResponse = await response.json(); // Use .json() for JSON content
-              console.log("API Response:", jsonResponse);
-              this.fetchedContent = jsonResponse.content.fulltext; // Extract fulltext from JSON
-              console.log("Fetched Content:", this.fetchedContent);
-            } catch (error) {
-              console.error("Error fetching content:", error);
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error parsing widgets:", error);
+    this.loadPageContent(); // Load content when component is mounted
+  },
+  watch: {
+    '$route.params.alias': {
+      immediate: true, // Watch and load content immediately
+      handler() {
+        this.loadPageContent(); // Load content whenever the route changes
       }
     }
   },
+  methods: {
+    async loadPageContent() {
+      const storedWidgets = localStorage.getItem("widgets");
+
+      if (storedWidgets) {
+        try {
+          const widgets = JSON.parse(storedWidgets);
+
+          if (widgets && widgets.menu && widgets.menu.main_menu) {
+            const childrenItemsArray = widgets.menu.main_menu.flatMap(
+              (item) => item.children || []
+            );
+
+            const baseUrl = "http://cityhospital.techecosys.net";
+            let proxyUrl = "https://api.allorigins.win/raw?url=";
+            this.childrenItems = childrenItemsArray.map((child) => ({
+              id: child.id,
+              parentId: child.parentId,
+              alias: child.alias,
+              label: child.label,
+              link: child.link,
+              url: proxyUrl + encodeURIComponent(
+                `${baseUrl}/website/website_api/content/${child.link}?access_key=123456789&debug=1`
+              ),
+            }));
+
+            this.matchingItem = this.childrenItems.find((child) => {
+              return child.link === this.$route.params.alias;
+            });
+
+            if (this.matchingItem && this.matchingItem.url) {
+              try {
+                const response = await fetch(this.matchingItem.url);
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const jsonResponse = await response.json();
+                this.fetchedContent = jsonResponse.content.fulltext; // Extract fulltext from JSON
+              } catch (error) {
+                console.error("Error fetching content:", error);
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error parsing widgets:", error);
+        }
+      }
+    }
+  }
 };
 </script>

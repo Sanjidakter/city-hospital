@@ -100,7 +100,7 @@ export default {
           } else {
             console.error("Slider data is missing or malformed in widgets");
           }
-          console.log(this.sliderItems);
+          // console.log(this.sliderItems);
         } catch (error) {
           console.error("Error parsing widgets from localStorage:", error);
         }
