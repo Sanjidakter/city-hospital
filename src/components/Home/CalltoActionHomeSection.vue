@@ -8,7 +8,7 @@
         >
           <div class="col-xl-10">
             <div class="text-center">
-              <h3>In an emergency? Need help now?</h3>
+              <h3>In an emergencys? Need help now?</h3>
               <p>
                 Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat

@@ -16,16 +16,16 @@
     :modules="modules"
     class="mySwiper"
   >
-    <swiper-slide v-for="(slide, index) in slides" :key="index">
+    <swiper-slide v-for="(slide) in services.items" :key="slide.id">
       <div class="testimonial-item">
         <div class="news_section ">
           <div class="image_section">
-            <img class="img-fluid" :src="slide.image" alt="alt" />
+            <img class="img-fluid" :src="slide.image_url" alt="alt" />
           </div>
           <div class="news_title pt-2">
             <h3>{{ slide.title }}</h3>
             <div>
-              <p class="text-black">{{ slide.description }}</p>
+              <p class="text-black">{{ slide.fulltext }}</p>
             </div>
             <a href="#">Read More&gt;&gt;&gt;</a>
           </div>
@@ -34,7 +34,7 @@
     </swiper-slide>
   </swiper>
   <div class="text-center py-5">
-    <a class="btn" href="#">All Services </a>
+    <a class="btn" href="/category/service">All Services </a>
   </div>
  </div>
 </template>
@@ -44,9 +44,9 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 
 // Import Swiper styles
 import "swiper/css";
-
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -59,37 +59,69 @@ export default {
   },
   data() {
     return {
-      slides: [
-        {
-          image:
-            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-4.jpg",
-          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-          description: "Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-        },
-        {
-          image:
-            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-5.jpg",
-          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-          description:
-            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-        },
-        {
-          image:
-            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-3.jpg",
-          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-          description:
-            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-        },
-        {
-          image:
-            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-4.jpg",
-          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-          description:
-            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-        },
-        // Add more slides as needed
-      ],
+      widgets: [], // Ensure widgets is defined in the data object
+      services: [],
     };
+  },
+  async mounted() {
+    // Call fetchData when the component is mounted
+    await this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const storedWidgets = localStorage.getItem("widgets");
+
+        console.log("Fetching data from API...");
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/raw?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/website/website_api/settings?access_key=123456789`
+          );
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Compare API data with localStorage data
+        if (storedWidgets) {
+          const parsedWidgets = JSON.parse(storedWidgets);
+
+          // Compare stringified versions of the data to avoid deep object comparison
+          if (JSON.stringify(parsedWidgets) !== JSON.stringify(data.widgets)) {
+            console.log("Data has changed, updating localStorage...");
+            localStorage.setItem("widgets", JSON.stringify(data.widgets));
+            this.widgets = data.widgets;
+          } else {
+            console.log(
+              "Data is the same as in localStorage, no update needed.",
+              data.widgets.home_page_block[7].items
+            );
+            this.widgets = parsedWidgets;
+          }
+          this.services = data.widgets.home_page_block[7];
+        } else {
+          // If no data in localStorage, set it
+          console.log("No data in localStorage, setting new data...");
+          localStorage.setItem("widgets", JSON.stringify(data.widgets));
+          this.widgets = data.widgets;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
   },
   setup() {
     return {

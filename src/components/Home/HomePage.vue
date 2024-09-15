@@ -2,17 +2,30 @@
   <div class="homepage-bg">
     <SliderComponent />
     <NoticesSection />
+    
 
     <!-- Dynamic Sections -->
     <div class="homepage-bg" v-if="homePageBlockItems.length">
       <div v-for="(block) in homePageBlockItems" :key="block.id" class="home-page-block">
-        <!-- Dynamically render component based on alias -->
-        <component :is="block.component" :block="block" />
+        <!-- Conditionally render LatestNewsHomeSection or raw HTML description -->
+        <component
+          v-if="block.widget_element_path === 'LatestNewsHomeSection' ||
+                 block.widget_element_path === 'LatestServiceHomeSection' ||
+                 block.widget_element_path === 'DoctorsHomeSection' ||
+                 block.widget_element_path === 'StatsHomeSection' ||
+                 block.widget_element_path === 'GalleryHomeSection'"
+          :is="block.component"
+          :title="block.title"
+          :description="block.description"
+          :children="block.children"
+        />
+        <div v-else v-html="block.description"></div>
       </div>
     </div>
 
     <div v-else>
       <p>No content available for home page blocks</p>
+      <DefaultSection />
     </div>
   </div>
 </template>
@@ -21,6 +34,11 @@
 import SliderComponent from './SliderComponent.vue';
 import NoticesSection from './NoticesSection.vue';
 import DefaultSection from './DefaultSection.vue';
+import LatestNewsHomeSection from './LatestNewsHomeSection.vue'; // Import LatestNewsHomeSection
+import GalleryHomeSection from './GalleryHomeSection.vue';
+import LatestServiceHomeSection from './LatestServiceHomeSection.vue';
+import DoctorsHomeSection from './DoctorsHomeSection.vue';
+import StatsHomeSection from './StatsHomeSection.vue';
 
 export default {
   name: "HomePage",
@@ -28,6 +46,7 @@ export default {
     SliderComponent,
     NoticesSection,
     DefaultSection,
+    LatestNewsHomeSection // Register LatestNewsHomeSection
   },
   data() {
     return {
@@ -67,34 +86,39 @@ export default {
     }
   },
   methods: {
-  async getComponent(widget_element_path) {
-    // console.log(`Getting the component for path: ${widget_element_path}`);
+    async getComponent(widget_element_path) {
+      // Special case for LatestNewsHomeSection
+      if (widget_element_path === 'LatestNewsHomeSection') {
+        return LatestNewsHomeSection;
+      }
+      if (widget_element_path === 'LatestServiceHomeSection') {
+        return LatestServiceHomeSection;
+      }
+      if (widget_element_path === 'GalleryHomeSection') {
+        return GalleryHomeSection;
+      }
+      if (widget_element_path === 'DoctorsHomeSection') {
+        return DoctorsHomeSection;
+      }
+      if (widget_element_path === 'StatsHomeSection') {
+        return StatsHomeSection;
+      }
 
-    try {
-      // Dynamically import the component using the provided widget_element_path
-      const component = await import(`./${widget_element_path}.vue`);
-      // console.log(`Component imported successfully:`, component);
+      try {
+        // Dynamically import the component using the provided widget_element_path
+        const component = await import(`./${widget_element_path}.vue`);
 
-      // Check if component has default export
-      if (component.default) {
-        // console.log('Rendering component:', component.default);
-        return component.default;
-      } else {
-        // console.warn('No default export found, falling back to DefaultSection');
+        // Check if component has default export
+        if (component.default) {
+          return component.default;
+        } else {
+          return DefaultSection;
+        }
+      } catch (error) {
+        console.warn(`Component "${widget_element_path}" not found. Rendering DefaultSection instead.`);
         return DefaultSection;
       }
-    } catch (error) {
-      console.warn(`Component "${widget_element_path}" not found. Rendering DefaultSection instead.`);
-      return DefaultSection;
     }
   }
-}
-
 };
 </script>
-
-<style scoped>
-.home-page-block {
-  margin-bottom: 20px;
-}
-</style>

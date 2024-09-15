@@ -35,7 +35,7 @@ export default {
       once: true, // Animations will occur only once
       mirror: false, // Disable animation when scrolling back
     });
-    console.log("AOS Initialized");
+    // console.log("AOS Initialized");
   },
   updated() {
     AOS.refresh(); // Refresh AOS on component updates

@@ -5,7 +5,7 @@
         <!-- Logo Column -->
         <div class="col-xl-3 col-md-3">
           <img
-            src="https://www.cityhospitalbd.com/includes/theme/default//img/logo.png"
+            :src="sidSite.app_setting?.organization_information?.logo"
             class="img-fluid"
             alt="alt"
           />
@@ -22,7 +22,9 @@
                 <div class="icon me-2">
                   <i class="fa fa-phone"></i>
                 </div>
-                <div> {{ sidSite.app_setting?.organization_information?.mobile }}</div>
+                <div>
+                  {{ sidSite.app_setting?.organization_information?.mobile }}
+                </div>
               </div>
             </li>
             <!-- Address -->
@@ -42,7 +44,13 @@
                 <div class="icon me-2">
                   <i class="fas fa-envelope"></i>
                 </div>
-                <div> {{ sidSite.app_setting?.organization_information?.['contact-email'] }}</div>
+                <div>
+                  {{
+                    sidSite.app_setting?.organization_information?.[
+                      "contact-email"
+                    ]
+                  }}
+                </div>
               </div>
             </li>
           </ul>
@@ -66,58 +74,57 @@ export default {
   },
   methods: {
     async fetchData() {
-  try {
-    const storedsidSite = localStorage.getItem("sid_site");
+      try {
+        const storedsidSite = localStorage.getItem("sid_site");
 
-    console.log("Fetching data from API for sidsite ...");
-    const baseUrl = "http://cityhospital.techecosys.net";
-    let proxyUrl = "https://api.allorigins.win/raw?url=";
-    let url =
-      proxyUrl +
-      encodeURIComponent(
-        `${baseUrl}/website/website_api/settings?access_key=123456789`
-      );
+        // console.log("Fetching data from API for sidsite ...");
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/raw?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/website/website_api/settings?access_key=123456789`
+          );
 
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-    const data = await response.json();
+        const data = await response.json();
 
-    // Compare API data with localStorage data
-    if (storedsidSite) {
-      const parsedsidSite = JSON.parse(storedsidSite);
+        // Compare API data with localStorage data
+        if (storedsidSite) {
+          const parsedsidSite = JSON.parse(storedsidSite);
 
-      // Compare stringified versions of the data to avoid deep object comparison
-      if (JSON.stringify(parsedsidSite) !== JSON.stringify(data.sid_site)) {
-        console.log("Data has changed, updating localStorage...");
-        localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
-        this.sidSite = data.sid_site;
-      } else {
-        console.log(
-          "Data is the same as in localStorage, no update needed."
-        );
-        this.sidSite = parsedsidSite;
+          // Compare stringified versions of the data to avoid deep object comparison
+          if (JSON.stringify(parsedsidSite) !== JSON.stringify(data.sid_site)) {
+            console.log("Data has changed, updating localStorage...");
+            localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
+            this.sidSite = data.sid_site;
+          } else {
+            console.log(
+              "Data is the same as in localStorage, no update needed."
+            );
+            this.sidSite = parsedsidSite;
+          }
+        } else {
+          // If no data in localStorage, set it
+          console.log("No data in localStorage, setting new data...");
+          localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
+          this.sidSite = data.sid_site;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    } else {
-      // If no data in localStorage, set it
-      console.log("No data in localStorage, setting new data...");
-      localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
-      this.sidSite = data.sid_site;
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
+    },
   },
 };
 </script>

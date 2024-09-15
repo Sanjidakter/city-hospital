@@ -45,13 +45,7 @@
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
 
-          <a class="cta-btn" href="#">Call for Appointment</a>
-          <a
-            class="cta-btn btn_white"
-            href="http://cityhospital.techecosys.net//post/110/our-doctors"
-          >
-            Find a Doctor
-          </a>
+        
         </div>
       </div>
     </div>
@@ -132,23 +126,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add styles for dropdowns and mobile nav toggle */
-.dropdown-menu {
-  display: none;
-}
 
-.dropdown-menu.dropdown-active {
-  display: block;
-}
-
-/* Mobile nav active styles */
-body.mobile-nav-active .navmenu {
-  /* Adjust styles for active mobile nav menu */
-}
-
-/* Mobile nav toggle icon styles */
-.mobile-nav-toggle.bi-x {
-  /* Adjust styles for close icon */
-}
-</style>

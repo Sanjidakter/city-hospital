@@ -153,7 +153,7 @@
                 <div class="col-lg-2 col-md-6 aos-init " data-aos="fade-up" data-aos-delay="100">
                     <div class=" pt-5">
                         <div class="text-center pt-4  ">
-                            <a href="#" class="btn ">All Departments</a>
+                            <a href="/category/all_department" class="btn ">All Departments</a>
                         </div>
                     </div>
                 </div> 
