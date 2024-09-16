@@ -1,6 +1,5 @@
 <template>
   <NavBar />
-  <!-- <MainComponent componentName="DynamicSection" /> -->
   <router-view />
   <FooterElement />
 </template>
@@ -10,12 +9,10 @@ import  AOS  from "aos";
 import "aos/dist/aos.css";
 import FooterElement from "./components/Shared/FooterElement.vue";
 import NavBar from "./components/Shared/NavBar.vue";
-// import MainComponent from "./components/MainComponent.vue";
 
 export default {
   name: "App",
   components: {
-    // MainComponent,
     NavBar,
     FooterElement,
   },

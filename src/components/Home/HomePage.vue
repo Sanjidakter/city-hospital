@@ -79,6 +79,7 @@ export default {
               component
             };
           }));
+          console.log("homepageblockitems",this.homePageBlockItems);
         }
       } catch (error) {
         console.error("Error parsing widgets:", error);

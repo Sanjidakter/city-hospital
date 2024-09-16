@@ -1,4 +1,4 @@
-import ContactUs from "@/components/ContactUs.vue";
+import ContactUs from "@/components/Home/ContactUs.vue";
 import HomePage from "@/components/Home/HomePage.vue";
 import DynamicPage from "@/views/DynamicPage.vue";
 import { createRouter, createWebHistory } from "vue-router";

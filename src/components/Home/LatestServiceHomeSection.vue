@@ -1,132 +1,94 @@
 <template>
-  <div class="container section-title aos-init aos-animate" data-aos="fade-up">
-    <h2>Latest Services</h2>
-    <p class="text-black">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-  <swiper
-    :slidesPerView="3"
-    :spaceBetween="20"
-    :loop="true"
-    :centeredSlides="true"
-    :autoplay="{
-      delay: 2500,
-      disableOnInteraction: false,
-    }"
-    :pagination="false"
-    :navigation="false"
-    :modules="modules"
-    class="mySwiper"
-  >
-    <swiper-slide v-for="(slide) in services.items" :key="slide.id">
-      <div class="testimonial-item">
-        <div class="news_section ">
-          <div class="image_section">
-            <img class="img-fluid" :src="slide.image_url" alt="alt" />
-          </div>
-          <div class="news_title pt-2">
-            <h3>{{ slide.title }}</h3>
-            <div>
-              <p class="text-black">{{ slide.fulltext }}</p>
-            </div>
-            <a href="#">Read More&gt;&gt;&gt;</a>
-          </div>
-        </div>
-      </div>
-    </swiper-slide>
-  </swiper>
-  <div class="text-center py-5">
-    <a class="btn" href="/category/service">All Services </a>
+  <div class="container">
+   <swiper
+     :slidesPerView="3"
+     :spaceBetween="20"
+     :loop="true"
+     :centeredSlides="true"
+     :autoplay="{
+       delay: 2500,
+       disableOnInteraction: false,
+     }"
+     :pagination="false"
+     :navigation="false"
+     :modules="modules"
+     class="mySwiper"
+   >
+     <swiper-slide v-for="(slide, index) in slides" :key="index">
+       <div class="testimonial-item">
+         <div class="news_section">
+           <div class="image_section">
+             <img class="img-fluid" :src="slide.image_url" alt="alt" />
+           </div>
+           <div class="news_title pt-2">
+             <h3>{{ slide.title }}</h3>
+             <div>
+               <p class="text-black">{{ slide.fulltext }}</p>
+             </div>
+             <a href="#">Read More&gt;&gt;&gt;</a>
+           </div>
+         </div>
+       </div>
+     </swiper-slide>
+   </swiper>
+   <div class="text-center py-5">
+     <a class="btn" href="#">All Services </a>
+   </div>
   </div>
- </div>
-</template>
-<script>
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
-
-// import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-
-export default {
-  name: "LatestServiceHomeSection",
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  data() {
-    return {
-      widgets: [], // Ensure widgets is defined in the data object
-      services: [],
-    };
-  },
-  async mounted() {
-    // Call fetchData when the component is mounted
-    await this.fetchData();
-  },
-  methods: {
-    async fetchData() {
-      try {
-        const storedWidgets = localStorage.getItem("widgets");
-
-        console.log("Fetching data from API...");
-        const baseUrl = "http://cityhospital.techecosys.net";
-        let proxyUrl = "https://api.allorigins.win/raw?url=";
-        let url =
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/website/website_api/settings?access_key=123456789`
-          );
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Compare API data with localStorage data
-        if (storedWidgets) {
-          const parsedWidgets = JSON.parse(storedWidgets);
-
-          // Compare stringified versions of the data to avoid deep object comparison
-          if (JSON.stringify(parsedWidgets) !== JSON.stringify(data.widgets)) {
-            console.log("Data has changed, updating localStorage...");
-            localStorage.setItem("widgets", JSON.stringify(data.widgets));
-            this.widgets = data.widgets;
-          } else {
-            console.log(
-              "Data is the same as in localStorage, no update needed.",
-              data.widgets.home_page_block[7].items
-            );
-            this.widgets = parsedWidgets;
-          }
-          this.services = data.widgets.home_page_block[7];
-        } else {
-          // If no data in localStorage, set it
-          console.log("No data in localStorage, setting new data...");
-          localStorage.setItem("widgets", JSON.stringify(data.widgets));
-          this.widgets = data.widgets;
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+ </template>
+ <script>
+ // Import Swiper Vue.js components
+ import { Swiper, SwiperSlide } from "swiper/vue";
+ 
+ // Import Swiper styles
+ import "swiper/css";
+ 
+ import "swiper/css/pagination";
+ import "swiper/css/navigation";
+ 
+ // import required modules
+ import { Autoplay, Pagination, Navigation } from "swiper/modules";
+ 
+ export default {
+   name: "LatestServiceHomeSection",
+   components: {
+     Swiper,
+     SwiperSlide,
+   },
+   data() {
+     return {
+       slides: [],
+       widgets: [], // Ensure widgets is defined in the data object
+       services: [],
+     };
+   },
+   setup() {
+     return {
+       modules: [Autoplay, Pagination, Navigation],
+     };
+   },
+   
+   async mounted() {
+      // Call fetchData when the component is mounted
+      await this.fetchData();
     },
-  },
-  setup() {
-    return {
-      modules: [Autoplay, Pagination, Navigation],
-    };
-  },
-};
-</script>
+    methods: {
+      async fetchData() {
+        try {
+          const storedWidgets = localStorage.getItem("widgets");
+  
+          if (storedWidgets) {
+            console.log("using data from localstorage for home service...");
+            this.widgets = JSON.parse(storedWidgets);
+            this.services = this.widgets.home_page_block[7];
+            this.slides = this.services.items;
+          }else{
+            console.log("No widgets data in localstorage");
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      },
+    },
+ };
+ </script>
