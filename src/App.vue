@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import  AOS  from "aos";
+import AOS from "aos";
 import "aos/dist/aos.css";
 import FooterElement from "./components/Shared/FooterElement.vue";
 import NavBar from "./components/Shared/NavBar.vue";
@@ -71,7 +71,9 @@ export default {
 
           // Compare stringified versions of the data to avoid deep object comparison
           if (JSON.stringify(parsedWidgets) !== JSON.stringify(data.widgets)) {
-            console.log("Data has changed, updating localStorage...");
+            console.log(
+              "Data has changed in widgets, updating localStorage..."
+            );
             localStorage.setItem("widgets", JSON.stringify(data.widgets));
             this.widgets = data.widgets;
           } else {

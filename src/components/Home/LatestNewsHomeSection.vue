@@ -29,7 +29,7 @@
               <div>
                 <p>{{ newsItem.fulltext }}</p>
               </div>
-              <a href="#">Read More&gt;&gt;&gt;</a>
+              <a :href="newsItem.url">Read More&gt;&gt;&gt;</a>
             </div>
           </div>
         </div>
@@ -41,6 +41,8 @@
   </section>
 </template>
 <script>
+import { useHead } from '@vueuse/head';
+
 
 export default {
   name: "LatestNewsHomeSection",
@@ -50,6 +52,14 @@ export default {
       default: () => [],
     },
   },
-
+  setup() {
+    useHead({
+      title: 'News - City Hospital',
+      meta: [
+        { name: 'description', content: 'Explore latest news of City Hospital.' },
+        { name: 'keywords', content: 'news, hospital, departments, medical services' },
+      ],
+    });
+  },
 };
 </script>

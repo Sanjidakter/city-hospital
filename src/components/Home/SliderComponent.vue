@@ -15,7 +15,6 @@
         <!-- Image with correct binding -->
         <img :src="item.imageUrl" class="d-block w-100" :alt="item.title" />
       </div>
-      =
 
       <a
         class="carousel-control-prev"

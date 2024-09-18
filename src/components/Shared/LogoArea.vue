@@ -106,7 +106,7 @@ export default {
 
           // Compare stringified versions of the data to avoid deep object comparison
           if (JSON.stringify(parsedsidSite) !== JSON.stringify(data.sid_site)) {
-            console.log("Data has changed, updating localStorage...");
+            console.log("Data has changed in sideSite, updating localStorage...");
             localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
             this.sidSite = data.sid_site;
           } else {

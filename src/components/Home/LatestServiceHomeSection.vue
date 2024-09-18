@@ -36,7 +36,7 @@
                 <div>
                   <p class="text-black">{{ slide.fulltext }}</p>
                 </div>
-                <a href="#">Read More&gt;&gt;&gt;</a>
+                <a :href="slide.url">Read More&gt;&gt;&gt;</a>
               </div>
             </div>
           </div>
@@ -60,6 +60,7 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { useHead } from "@vueuse/head";
 
 export default {
   name: "LatestServiceHomeSection",
@@ -73,44 +74,18 @@ export default {
       default: () => [],
     },
   },
-  //  data() {
-  //    return {
-  //      slides: [
-  //        {
-  //          image:
-  //            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-4.jpg",
-  //          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-  //          description: "Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-  //        },
-  //        {
-  //          image:
-  //            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-5.jpg",
-  //          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-  //          description:
-  //            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-  //        },
-  //        {
-  //          image:
-  //            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-3.jpg",
-  //          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-  //          description:
-  //            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-  //        },
-  //        {
-  //          image:
-  //            "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/departments-4.jpg",
-  //          title: "Multi Slice CT Scan Machine in City Hospital Ltd.",
-  //          description:
-  //            " Diseases   are growing day by day. People are worried about the emergency medical   care. City Hospital Ltd. glad to inform you to provide unparallel,   quality medical service to the people",
-  //        },
-  //        // Add more slides as needed
-  //      ],
-  //    };
-  //  },
   setup() {
+    useHead({
+      title: 'Services - City Hospital',
+      meta: [
+        { name: 'description', content: 'Explore the servicess at City Hospital.' },
+        { name: 'keywords', content: 'hospital, departments, medical services' },
+      ],
+    });
     return {
       modules: [Autoplay, Pagination, Navigation],
     };
+    
   },
 };
 </script>
