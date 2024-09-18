@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { useHead } from "@vueuse/head";
+
 export default {
   data() {
     return {
@@ -46,12 +48,12 @@ export default {
     this.loadPageContent(); // Load content when component is mounted
   },
   watch: {
-    '$route.params.alias': {
+    "$route.params.alias": {
       immediate: true, // Watch and load content immediately
       handler() {
         this.loadPageContent(); // Load content whenever the route changes
-      }
-    }
+      },
+    },
   },
   methods: {
     async loadPageContent() {
@@ -74,9 +76,11 @@ export default {
               alias: child.alias,
               label: child.label,
               link: child.link,
-              url: proxyUrl + encodeURIComponent(
-                `${baseUrl}/website/website_api/content/${child.link}?access_key=123456789&debug=1`
-              ),
+              url:
+                proxyUrl +
+                encodeURIComponent(
+                  `${baseUrl}/website/website_api/content/${child.link}?access_key=123456789&debug=1`
+                ),
             }));
 
             this.matchingItem = this.childrenItems.find((child) => {
@@ -91,6 +95,21 @@ export default {
                 }
                 const jsonResponse = await response.json();
                 this.fetchedContent = jsonResponse.content.fulltext; // Extract fulltext from JSON
+                // part of meta tag handling
+                // console.log("json res", jsonResponse.content);
+                useHead({
+                  title: jsonResponse.content.meta_title,
+                  meta: [
+                    {
+                      name: jsonResponse.content.meta_description,
+                      content: "Explore the servicess at City Hospital.",
+                    },
+                    {
+                      name: jsonResponse.content.meta_description.meta_keywords,
+                      content: "hospital, departments, medical services",
+                    },
+                  ],
+                });
               } catch (error) {
                 console.error("Error fetching content:", error);
               }
@@ -100,7 +119,7 @@ export default {
           console.error("Error parsing widgets:", error);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>

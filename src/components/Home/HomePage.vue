@@ -41,6 +41,7 @@ import GalleryHomeSection from './GalleryHomeSection.vue';
 import LatestServiceHomeSection from './LatestServiceHomeSection.vue';
 import DoctorsHomeSection from './DoctorsHomeSection.vue';
 import StatsHomeSection from './StatsHomeSection.vue';
+import { markRaw } from 'vue';
 
 export default {
   name: "HomePage",
@@ -93,19 +94,19 @@ export default {
     async getComponent(widget_element_path) {
       // Special case for LatestNewsHomeSection
       if (widget_element_path === 'LatestNewsHomeSection') {
-        return LatestNewsHomeSection;
+        return markRaw(LatestNewsHomeSection);
       }
       if (widget_element_path === 'LatestServiceHomeSection') {
-        return LatestServiceHomeSection;
+        return markRaw(LatestServiceHomeSection);
       }
       if (widget_element_path === 'GalleryHomeSection') {
-        return GalleryHomeSection;
+        return markRaw(GalleryHomeSection);
       }
       if (widget_element_path === 'DoctorsHomeSection') {
-        return DoctorsHomeSection;
+        return markRaw(DoctorsHomeSection);
       }
       if (widget_element_path === 'StatsHomeSection') {
-        return StatsHomeSection;
+        return markRaw(StatsHomeSection);
       }
 
       try {

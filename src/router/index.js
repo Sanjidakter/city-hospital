@@ -8,7 +8,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   { path: "/", component: HomePage },
   { path: "/contact-us", component: ContactUs },
-  { path: '/category/all_department', component: DepartmentDoctor },
+  { path: '/departments', component: DepartmentDoctor },
   { path: "/:alias", component: DynamicPage, props:true },
   ];
 

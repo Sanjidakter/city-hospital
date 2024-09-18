@@ -1,72 +1,92 @@
 <template>
-    <section class="all-departments py-5">
-      <div class="container">
-        <h2 class="text-center text-orange mb-4">All Departments</h2>
-  
-        <div class="row">
-          <div class="col-md-4 mb-4" v-for="department in departments" :key="department.id">
-            <div class="department-details p-3 border rounded">
-              <h5 class="text-center">{{ department.name }}</h5>
-              <p>{{ department.description }}</p>
-            </div>
+  <section class="all-departments py-5">
+    <div class="container">
+      <h2 class="text-center text-orange mb-4">All Departments</h2>
+
+      <div class="row">
+        <div
+          class="col-md-4 mb-4"
+          v-for="department in departmentContent"
+          :key="department.id"
+        >
+          <div class="department-details p-3 border rounded">
+            <i class="fas fa-stethoscope"></i>
+            <h5 class="text-center">{{ department.title }}</h5>
+            <!-- <p>{{ department.fulltext }}</p> -->
+            <div class="p-3" v-html="department.fulltext"></div>
           </div>
         </div>
       </div>
-    </section>
-  </template>
-  
-  <script>
-import { useHead } from '@vueuse/head';
+    </div>
+  </section>
+</template>
 
-  export default {
-    name: 'DepartmentDoctor',
-    setup() {
-    useHead({
-      title: 'Departments - City Hospital',
-      meta: [
-        { name: 'description', content: 'Explore the departments at City Hospital.' },
-        { name: 'keywords', content: 'hospital, departments, medical services' },
-      ],
-    });
+<script>
+export default {
+  name: "DepartmentDoctor",
+  data() {
+    return {
+      departmentContent: [],
+    };
   },
-    data() {
-      return {
-        departments: [
-          {
-            id: 1,
-            name: 'Corona Isolation Unit',
-            description: 'This unit handles isolation and treatment for COVID-19 patients.',
-          },
-          {
-            id: 2,
-            name: 'Speech Therapy Center',
-            description: 'The center provides speech therapy and treatment for speech disorders.',
-          },
-          {
-            id: 3,
-            name: 'City Diabetic Center',
-            description: 'A specialized center for managing and treating diabetic patients.',
-          },
-          // Add more departments with detailed descriptions
-        ],
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .text-orange {
-    color: #f19a2e;
-  }
-  
-  .department-details {
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-  }
-  
-  .department-details:hover {
-    background-color: #f1f1f1;
-    transform: translateY(-5px);
-  }
-  </style>
-  
+ methods: {
+  async fetchDepartmentInfo() {
+    try {
+      const baseUrl = "http://cityhospital.techecosys.net";
+      let proxyUrl = "https://api.allorigins.win/get?url=";
+      let url =
+        proxyUrl +
+        encodeURIComponent(
+          `${baseUrl}/website/website_api/contents/department?access_key=123456789`
+        );
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the response as JSON
+      const result = await response.json();
+      const data = JSON.parse(result.contents);
+
+      // Log each department's name
+      data.contents.forEach(department => {
+        console.log(department.title);
+      });
+
+      // Update component data
+      this.departmentContent = data.contents;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  },
+},
+
+  mounted() {
+    this.fetchDepartmentInfo();
+  },
+};
+</script>
+
+<style scoped>
+.text-orange {
+  color: #f19a2e;
+}
+
+.department-details {
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.department-details:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-5px);
+}
+</style>
