@@ -17,7 +17,9 @@
           :is="block.component"
           :title="block.title"
           :description="block.description"
-          :children="block.children"
+          :news="block.widget_element_path === 'LatestNewsHomeSection' ? (console.log('News:', block.items), block.items) : []"
+          :services="block.widget_element_path === 'LatestServiceHomeSection' ? (console.log('services:', block.items), block.items) : []"
+          :slides="block.widget_element_path === 'GalleryHomeSection' ? (console.log('slides:', block.items), block.items) : []"
         />
         <div v-else v-html="block.description"></div>
       </div>
@@ -76,7 +78,8 @@ export default {
               title: item.title,
               description: item.description,
               children: item.items || [], // Include children for dropdown
-              component
+              component,
+              items:item.items || []
             };
           }));
           console.log("homepageblockitems",this.homePageBlockItems);

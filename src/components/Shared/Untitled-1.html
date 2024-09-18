@@ -1,54 +1,22 @@
-
-<script>
-  // Import Swiper Vue.js components
-  import { Swiper, SwiperSlide } from "swiper/vue";
-  
-  // Import Swiper styles
-  import "swiper/css";
-  import "swiper/css/pagination";
-  import "swiper/css/navigation";
-  
-  // import required modules
-  import { Autoplay, Pagination, Navigation } from "swiper/modules";
-  
-  export default {
-    name: "LatestServiceHomeSection",
-    components: {
-      Swiper,
-      SwiperSlide,
-    },
-    data() {
-      return {
-        widgets: [], // Ensure widgets is defined in the data object
-        services: [],
-      };
-    },
-    async mounted() {
-      // Call fetchData when the component is mounted
-      await this.fetchData();
-    },
-    methods: {
-      async fetchData() {
-        try {
-          const storedWidgets = localStorage.getItem("widgets");
-  
-          if (storedWidgets) {
-            console.log("using data from localstorage for home service...");
-            this.widgets = JSON.parse(storedWidgets);
-            this.services = this.widgets.home_page_block[7];
-          }else{
-            console.log("No widgets data in localstorage");
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      },
-    },
-    setup() {
-      return {
-        modules: [Autoplay, Pagination, Navigation],
-      };
-    },
-  };
-  </script>
-  
+<section id="contact_3" class="contact_3">
+  <div class="container">
+    <div class="text-center pb-5">
+      <h1 class="text-uppercase section_title">
+        <strong>If more, please contact us</strong>
+      </h1>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.183168938532!2d90.36033797419047!3d23.776490887776344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0bae1e1a7c1%3A0x8b2ca149919574a7!2sBangladesh%20Specialized%20Hospital!5e0!3m2!1sen!2sbd!4v1683730293496!5m2!1sen!2sbd"
+          width="100%"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
