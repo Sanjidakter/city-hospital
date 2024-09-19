@@ -1,13 +1,36 @@
 <template>
-  <div class="container my-5" v-if="department">
-    <div class="card">
+  <div  v-if="department">
+    <div class="page_title">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 pt-2">
+            <h3 class="font-weight-bold">{{ department.title }}</h3>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="http://cityhospital.techecosys.net/">Home </a>
+                <span class="divider">&nbsp;</span>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="http://cityhospital.techecosys.net/pages">Pages</a>
+                <span class="divider">&nbsp;</span>
+              </li>
+              <li class="breadcrumb-item">
+                {{ department.alias }}
+                <span class="divider-last">&nbsp;</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card container p-4">
       <img
         v-if="department.image_url"
         :src="department.image_url"
         class="card-img-top"
         alt="Featured Image"
       />
-      <div class="card-body">
+      <div class="card-body text-center">
         <h1>{{ department.id }}</h1>
         <h5 class="card-title">{{ department.title }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">
@@ -25,23 +48,26 @@
     </div>
 
     <!-- Display doctors section -->
-    <div class="doctors-section mt-5" v-if="doctors && doctors.length">
-      <h3>Doctors in this Department</h3>
-      <div class="doctor-card" v-for="doctor in doctors" :key="doctor.id">
-        <div class="card mb-3">
-          <div class="row no-gutters">
-            <div class="col-md-4">
-              <img
-                v-if="doctor.image_url"
-                :src="doctor.image_url"
-                class="card-img"
-                alt="Doctor Image"
-              />
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">{{ doctor.name }}</h5>
-                <p class="card-text">{{ doctor.speciality }}</p>
+    <div class="doctors-section container mt-5" v-if="doctors && doctors.length">
+      <h3 class="m-4">Doctors in this Department</h3>
+      <div class="container">
+        <div class="row gy-4">
+          <div
+            class="col-lg-3 col-md-3"
+            v-for="doctor in doctors"
+            :key="doctor.id"
+          >
+            <div class="team">
+              <div class="text-center">
+                <img
+                  class="img-fluid"
+                  src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
+                  alt=""
+                />
+                <div class="pt-1">
+                  <strong>{{ doctor.name }}</strong>
+                  <p>{{ doctor.degree }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -65,6 +91,12 @@ export default {
       department: null,
       doctors: [], // Initialize as an empty array
     };
+  },
+
+  watch: {
+    "$route.params.alias": {
+      immediate: true, // Watch and load content immediately
+    },
   },
   methods: {
     async fetchDepartmentDetail() {
@@ -135,7 +167,7 @@ export default {
 
         // Assign doctors data to the doctors array
         this.doctors = data;
-        console.log("Doctors Data:", data);
+        // console.log("Doctors Data:", data);
       } catch (error) {
         console.error("Error fetching doctors details:", error);
       }

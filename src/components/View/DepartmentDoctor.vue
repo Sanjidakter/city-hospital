@@ -4,6 +4,7 @@
       <h2 class="text-center text-orange mb-4">All Departments</h2>
 
       <div class="row">
+        
         <div
           class="col-md-4 mb-4"
           v-for="department in departmentContent"
@@ -16,8 +17,11 @@
             <h5 class="text-center">{{ department.title }}</h5>
             <div>
               <!-- Display only truncated text -->
-              <div class="p-3" v-html="getTruncatedText(department.fulltext)"></div>
-              
+              <div
+                class="p-3"
+                v-html="getTruncatedText(department.fulltext)"
+              ></div>
+
               <!-- Show More button redirects to Department Details page -->
               <div class="d-flex justify-content-between">
                 <button
@@ -26,9 +30,8 @@
                 >
                   More
                 </button>
-                <button class="btn btn-success">
-                  Doctors
-                </button>
+                <a href="/doctors" class="btn btn-success">Doctors</a>
+
               </div>
             </div>
           </div>
@@ -75,6 +78,7 @@ export default {
 
         // Update component data
         this.departmentContent = data.contents;
+        console.log("deparment content", this.departmentContent);
       } catch (error) {
         console.error("Error fetching department data:", error);
       }
@@ -90,7 +94,6 @@ export default {
       this.$router.push({
         name: "DepartmentDetails",
         params: { id: departmentId },
-       
       });
     },
   },

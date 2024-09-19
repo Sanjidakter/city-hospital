@@ -6,9 +6,14 @@
       <div class="row gy-2">
         <div class="col-lg-5 col-md-10">
           <select class="form-select" aria-label="Default select example">
-            <option selected>Select A Department</option>
-            <option value="1">Anaesthesia</option>
-           
+            <option value="" disabled selected>Select A Department</option>
+            <option
+              v-for="department in departments"
+              :key="department.id"
+              :value="department.id"
+            >
+              {{ department.title }}
+            </option>
           </select>
         </div>
         <div class="col-lg-5 col-md-10">
@@ -42,12 +47,10 @@
               />
               <div class="pt-1">
                 <strong>{{ doctor.name }}</strong>
-                <p>{{doctor.degree}}</p>
+                <p>{{ doctor.degree }}</p>
               </div>
             </div>
           </div>
-
-       
         </div>
       </div>
     </div>
@@ -60,7 +63,7 @@ export default {
   data() {
     return {
       doctors: [],
-      departments:[]
+      departments: [],
     };
   },
   methods: {
@@ -128,6 +131,7 @@ export default {
 
         // Update component data
         this.departments = data.contents;
+        console.log("departments", this.departments);
       } catch (error) {
         console.error("Error fetching department data:", error);
       }
@@ -135,7 +139,7 @@ export default {
   },
   mounted() {
     this.fetchDepartmentDoctors();
-    this.fetchDepartmentInfo()
+    this.fetchDepartmentInfo();
   },
 };
 </script>

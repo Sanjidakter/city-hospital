@@ -11,9 +11,10 @@ const routes = [
   { path: "/contact-us", component: ContactUs },
   { path: "/departments", component: DepartmentDoctor },
   {
-    path: "/department/:id", // Dynamic route for department details
-    component: DepartmentDetails,
-    props: true,
+    path: '/department/:id', // Define the path with the dynamic parameter
+    name: 'DepartmentDetails', // Name of the route
+    component: DepartmentDetails, // Component to render
+    props: true, // Pass route params as props to the component
   },
   {
     path: "/doctors", 
