@@ -60,7 +60,7 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useHead } from "@vueuse/head";
+
 
 export default {
   name: "LatestServiceHomeSection",
@@ -75,13 +75,6 @@ export default {
     },
   },
   setup() {
-    useHead({
-      title: 'Services - City Hospital',
-      meta: [
-        { name: 'description', content: 'Explore the servicess at City Hospital.' },
-        { name: 'keywords', content: 'hospital, departments, medical services' },
-      ],
-    });
     return {
       modules: [Autoplay, Pagination, Navigation],
     };

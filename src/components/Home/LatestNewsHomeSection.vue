@@ -41,7 +41,7 @@
   </section>
 </template>
 <script>
-import { useHead } from '@vueuse/head';
+
 
 
 export default {
@@ -52,14 +52,6 @@ export default {
       default: () => [],
     },
   },
-  setup() {
-    useHead({
-      title: 'News - City Hospital',
-      meta: [
-        { name: 'description', content: 'Explore latest news of City Hospital.' },
-        { name: 'keywords', content: 'news, hospital, departments, medical services' },
-      ],
-    });
-  },
+ 
 };
 </script>

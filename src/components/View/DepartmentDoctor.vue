@@ -10,10 +10,27 @@
           :key="department.id"
         >
           <div class="department-details p-3 border rounded">
-            <i class="fas fa-stethoscope"></i>
+            <div class="team_img p-2">
+              <i class="fas fa-stethoscope"></i>
+            </div>
             <h5 class="text-center">{{ department.title }}</h5>
-            <!-- <p>{{ department.fulltext }}</p> -->
-            <div class="p-3" v-html="department.fulltext"></div>
+            <div>
+              <!-- Display only truncated text -->
+              <div class="p-3" v-html="getTruncatedText(department.fulltext)"></div>
+              
+              <!-- Show More button redirects to Department Details page -->
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-primary"
+                  @click="goToDepartmentPage(department.id)"
+                >
+                  More
+                </button>
+                <button class="btn btn-success">
+                  Doctors
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -29,46 +46,54 @@ export default {
       departmentContent: [],
     };
   },
- methods: {
-  async fetchDepartmentInfo() {
-    try {
-      const baseUrl = "http://cityhospital.techecosys.net";
-      let proxyUrl = "https://api.allorigins.win/get?url=";
-      let url =
-        proxyUrl +
-        encodeURIComponent(
-          `${baseUrl}/website/website_api/contents/department?access_key=123456789`
-        );
+  methods: {
+    async fetchDepartmentInfo() {
+      try {
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/get?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/website/website_api/contents/department?access_key=123456789`
+          );
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+        const data = JSON.parse(result.contents);
+
+        // Update component data
+        this.departmentContent = data.contents;
+      } catch (error) {
+        console.error("Error fetching department data:", error);
       }
-
-      // Parse the response as JSON
-      const result = await response.json();
-      const data = JSON.parse(result.contents);
-
-      // Log each department's name
-      data.contents.forEach(department => {
-        console.log(department.title);
+    },
+    getTruncatedText(text) {
+      // Limit to 16 words
+      let words = text.split(/\s+/);
+      if (words.length <= 16) return text;
+      return words.slice(0, 16).join(" ") + "...";
+    },
+    goToDepartmentPage(departmentId) {
+      // Navigate to the department details page and pass department data
+      this.$router.push({
+        name: "DepartmentDetails",
+        params: { id: departmentId },
+       
       });
-
-      // Update component data
-      this.departmentContent = data.contents;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    },
   },
-},
-
   mounted() {
     this.fetchDepartmentInfo();
   },

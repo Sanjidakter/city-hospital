@@ -42,6 +42,7 @@ import LatestServiceHomeSection from './LatestServiceHomeSection.vue';
 import DoctorsHomeSection from './DoctorsHomeSection.vue';
 import StatsHomeSection from './StatsHomeSection.vue';
 import { markRaw } from 'vue';
+import { useHead } from '@vueuse/head';
 
 export default {
   name: "HomePage",
@@ -55,6 +56,15 @@ export default {
     return {
       homePageBlockItems: [], // Array to hold block items
     };
+  },
+  setup() {
+    useHead({
+      title: 'Home',
+      meta: [
+        { name: 'description', content: 'Explore latest news of City Hospital.' },
+        { name: 'keywords', content: 'news, hospital, departments, medical services' },
+      ],
+    });
   },
   async mounted() {
     // Check if widgets are stored in localStorage
