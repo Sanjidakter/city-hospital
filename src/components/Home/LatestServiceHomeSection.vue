@@ -32,11 +32,14 @@
                 <img class="img-fluid" :src="slide.image_url" alt="alt" />
               </div>
               <div class="news_title pt-2">
-                <h3>{{ slide.title }}</h3>
+                <a :href="slide.url">
+                  <h3>{{ slide.title }}</h3>
+                </a>
+
                 <div>
-                  <p class="text-black">{{ slide.fulltext }}</p>
+                  <p class="text-black" v-html="slide.fulltext"></p>
                 </div>
-                <a :href="slide.url">Read More&gt;&gt;&gt;</a>
+                <a :href="slide.url">Read More</a>
               </div>
             </div>
           </div>
@@ -61,7 +64,6 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-
 export default {
   name: "LatestServiceHomeSection",
   components: {
@@ -78,7 +80,6 @@ export default {
     return {
       modules: [Autoplay, Pagination, Navigation],
     };
-    
   },
 };
 </script>

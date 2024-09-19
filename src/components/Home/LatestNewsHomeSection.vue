@@ -25,9 +25,10 @@
               <img class="img-fluid" :src="newsItem.image_url" alt="alt" />
             </div>
             <div class="news_title pt-2">
-              <h3>{{ newsItem.title }}</h3>
+              <a :href="newsItem.url"><h3>{{ newsItem.title }}</h3></a>
+              
               <div>
-                <p>{{ newsItem.fulltext }}</p>
+                <p v-html="newsItem.fulltext"></p>
               </div>
               <a :href="newsItem.url">Read More&gt;&gt;&gt;</a>
             </div>

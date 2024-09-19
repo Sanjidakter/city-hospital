@@ -4,7 +4,6 @@
       <h2 class="text-center text-orange mb-4">All Departments</h2>
 
       <div class="row">
-        
         <div
           class="col-md-4 mb-4"
           v-for="department in departmentContent"
@@ -17,10 +16,7 @@
             <h5 class="text-center">{{ department.title }}</h5>
             <div>
               <!-- Display only truncated text -->
-              <div
-                class="p-3"
-                v-html="getTruncatedText(department.fulltext)"
-              ></div>
+              <div class="p-3" v-html="getTruncatedText(department.fulltext)"></div>
 
               <!-- Show More button redirects to Department Details page -->
               <div class="d-flex justify-content-between">
@@ -31,7 +27,6 @@
                   More
                 </button>
                 <a href="/doctors" class="btn btn-success">Doctors</a>
-
               </div>
             </div>
           </div>
@@ -76,9 +71,11 @@ export default {
         const result = await response.json();
         const data = JSON.parse(result.contents);
 
+        // Store fetched data in localStorage
+        localStorage.setItem("departmentContent", JSON.stringify(data.contents));
+
         // Update component data
         this.departmentContent = data.contents;
-        console.log("deparment content", this.departmentContent);
       } catch (error) {
         console.error("Error fetching department data:", error);
       }
@@ -96,9 +93,19 @@ export default {
         params: { id: departmentId },
       });
     },
+    loadFromLocalStorage() {
+      const storedData = localStorage.getItem("departmentContent");
+      if (storedData) {
+        this.departmentContent = JSON.parse(storedData);
+      } else {
+        // Fetch the data if not available in localStorage
+        this.fetchDepartmentInfo();
+      }
+    },
   },
   mounted() {
-    this.fetchDepartmentInfo();
+    // Load data from localStorage or fetch from the server
+    this.loadFromLocalStorage();
   },
 };
 </script>
