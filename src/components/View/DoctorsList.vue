@@ -8,8 +8,7 @@
           <select class="form-select" aria-label="Default select example">
             <option selected>Select A Department</option>
             <option value="1">Anaesthesia</option>
-            <option value="2">Blood Bank</option>
-            <option value="3">Breast, Colorectal & Laparoscopic Surgery</option>
+           
           </select>
         </div>
         <div class="col-lg-5 col-md-10">
@@ -29,7 +28,11 @@
   <div class="board_of_directors">
     <div class="container">
       <div class="row gy-4">
-        <div class="col-lg-3 col-md-3">
+        <div
+          class="col-lg-3 col-md-3"
+          v-for="doctor in doctors"
+          :key="doctor.id"
+        >
           <div class="team">
             <div class="text-center">
               <img
@@ -38,116 +41,13 @@
                 alt=""
               />
               <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
+                <strong>{{ doctor.name }}</strong>
+                <p>{{doctor.degree}}</p>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-3">
-          <div class="team">
-            <div class="text-center">
-              <img
-                class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
-              />
-              <div class="pt-1">
-                <strong>Prof. Dr. Shahidul Bari</strong>
-                <p>MBBS, FCPS(Surgery)</p>
-              </div>
-            </div>
-          </div>
+
+       
         </div>
       </div>
     </div>
@@ -155,7 +55,87 @@
 </template>
 
 <script>
-export default{
-    name:"DoctorsList",
-}
+export default {
+  name: "DoctorsList",
+  data() {
+    return {
+      doctors: [],
+      departments:[]
+    };
+  },
+  methods: {
+    async fetchDepartmentDoctors() {
+      try {
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/get?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/pip/pip_api/doctors?access_key=123456789`
+          );
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        // Assuming the 'doctors' data is in the result, check the structure
+        const data = result.contents
+          ? JSON.parse(result.contents).doctors
+          : result.doctors;
+
+        // Assign doctors data to the doctors array
+        this.doctors = data;
+        console.log("Doctors list Data:", data);
+      } catch (error) {
+        console.error("Error fetching doctors list:", error);
+      }
+    },
+    async fetchDepartmentInfo() {
+      try {
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/get?url=";
+        let url =
+          proxyUrl +
+          encodeURIComponent(
+            `${baseUrl}/website/website_api/contents/department?access_key=123456789`
+          );
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+        const data = JSON.parse(result.contents);
+
+        // Update component data
+        this.departments = data.contents;
+      } catch (error) {
+        console.error("Error fetching department data:", error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchDepartmentDoctors();
+    this.fetchDepartmentInfo()
+  },
+};
 </script>
