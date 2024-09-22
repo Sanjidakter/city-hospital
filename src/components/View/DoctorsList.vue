@@ -116,7 +116,8 @@ export default {
     loadFromLocalStorage() {
       const storedData = localStorage.getItem("doctorsList");
       if (storedData) {
-        this.doctorsList = JSON.parse(storedData);
+        this.doctors = JSON.parse(storedData);
+        console.log("Loaded doctors from localStorage:", this.doctors);
       } else {
         // Fetch the data if not available in localStorage
         this.fetchDepartmentDoctors();
@@ -195,7 +196,6 @@ export default {
   },
   mounted() {
     this.loadFromLocalStorage();
-    this.fetchDepartmentDoctors();
     this.fetchDepartmentInfo();
    
 

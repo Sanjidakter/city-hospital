@@ -65,7 +65,7 @@
             <div class="sidebar-widget latest-post mb-3">
               <h5>Popular Posts</h5>
 
-              <div class="py-2" v-for="blog in blogs" :key="blog.id">
+              <div class="py-2" v-for="blog in blogs.slice(0,3)" :key="blog.id">
                 <span class="text-black text-capitalize mr-3">
                   <i class="icofont-calendar mr-1"></i>
                   {{
