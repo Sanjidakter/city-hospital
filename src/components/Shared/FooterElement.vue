@@ -119,7 +119,7 @@ export default {
     async fetchData() {
       try {
         const storedsidSite = localStorage.getItem("sid_site");
-        if(storedsidSite){
+        if(!storedsidSite){
           console.log("there is no stored sidSite present in localStorage to show in footer");
         }
         const parsedsidSite = JSON.parse(storedsidSite);

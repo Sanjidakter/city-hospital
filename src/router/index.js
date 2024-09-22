@@ -1,5 +1,6 @@
 import ContactUs from "@/components/Home/ContactUs.vue";
 import HomePage from "@/components/Home/HomePage.vue";
+import BlogList from "@/components/View/BlogList.vue";
 import DepartmentDetails from "@/components/View/DepartmentDetails.vue";
 import DepartmentDoctor from "@/components/View/DepartmentDoctor.vue";
 import DoctorsList from "@/components/View/DoctorsList.vue";
@@ -19,6 +20,10 @@ const routes = [
   {
     path: "/doctors", 
     component: DoctorsList,
+  },
+  {
+    path: "/blogs", 
+    component: BlogList,
   },
   { path: "/:alias", component: DynamicPage, props: true },
 ];

@@ -5,7 +5,11 @@
       <p><strong>Choose a department or type doctors name.</strong></p>
       <div class="row gy-2">
         <div class="col-lg-5 col-md-10">
-          <select class="form-select" aria-label="Default select example">
+          <select
+            class="form-select"
+            v-model="selectedDepartment"
+            aria-label="Default select example"
+          >
             <option value="" disabled selected>Select A Department</option>
             <option
               v-for="department in departments"
@@ -20,12 +24,14 @@
           <input
             type="text"
             class="form-control"
-            id="name"
+            v-model="doctorName"
             placeholder="Doctors Name"
           />
         </div>
         <div class="col-lg-2 col-md-2">
-          <button type="submit" class="btn btn-primary mb-3">Search</button>
+          <button @click="searchDoctor" class="btn btn-primary mb-3">
+            Search
+          </button>
         </div>
       </div>
     </div>
@@ -42,8 +48,8 @@
             <div class="text-center">
               <img
                 class="img-fluid"
-                src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
-                alt=""
+                :src="doctor.image_url || defaultImage"
+                alt="doctor"
               />
               <div class="pt-1">
                 <strong>{{ doctor.name }}</strong>
@@ -64,6 +70,10 @@ export default {
     return {
       doctors: [],
       departments: [],
+      doctorName: "", // for holding the input name
+      selectedDepartment: "", // for holding the selected department
+      defaultImage:
+        "http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png", // fallback image
     };
   },
   methods: {
@@ -90,19 +100,65 @@ export default {
         }
 
         const result = await response.json();
+        const data = JSON.parse(result.contents || "[]");
 
-        // Assuming the 'doctors' data is in the result, check the structure
-        const data = result.contents
-          ? JSON.parse(result.contents).doctors
-          : result.doctors;
+        // store fetched data in localstorage
+        localStorage.setItem("doctorsList", JSON.stringify(data.doctors));
 
         // Assign doctors data to the doctors array
-        this.doctors = data;
-        console.log("Doctors list Data:", data);
+        this.doctors = data.doctors;
+        console.log("Doctors list Data:", data.doctors);
       } catch (error) {
         console.error("Error fetching doctors list:", error);
       }
     },
+
+    loadFromLocalStorage() {
+      const storedData = localStorage.getItem("doctorsList");
+      if (storedData) {
+        this.doctorsList = JSON.parse(storedData);
+      } else {
+        // Fetch the data if not available in localStorage
+        this.fetchDepartmentDoctors();
+      }
+    },
+
+    async searchDoctor() {
+      try {
+        const baseUrl = "http://cityhospital.techecosys.net";
+        let proxyUrl = "https://api.allorigins.win/get?url=";
+
+        // Build query parameters based on the search inputs
+        let query = `${baseUrl}/pip/pip_api/doctors?access_key=123456789`;
+        if (this.doctorName) query += `&keyword=${this.doctorName}`;
+        if (this.selectedDepartment)
+          query += `&website_content_id=${this.selectedDepartment}`;
+
+        let url = proxyUrl + encodeURIComponent(query);
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        const data = JSON.parse(result.contents || "[]");
+
+        // Update doctors array with search results
+        this.doctors = data.doctors || [];
+        console.log("Searched Doctors list:", this.doctors);
+      } catch (error) {
+        console.error("Error searching for doctors:", error);
+      }
+    },
+
     async fetchDepartmentInfo() {
       try {
         const baseUrl = "http://cityhospital.techecosys.net";
@@ -138,8 +194,11 @@ export default {
     },
   },
   mounted() {
+    this.loadFromLocalStorage();
     this.fetchDepartmentDoctors();
     this.fetchDepartmentInfo();
+   
+
   },
 };
 </script>
