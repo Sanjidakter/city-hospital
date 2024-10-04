@@ -56,20 +56,6 @@
       Swiper,
       SwiperSlide,
     },
-    // data() {
-    //   return {
-    //     slides: [
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-1.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-1.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-2.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-2.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-3.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-3.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-4.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-4.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-5.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-5.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-6.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-6.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-7.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-7.jpg" },
-    //       { image: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-8.jpg", href: "http://cityhospital.techecosys.net/includes/themes/primary/hospital/hospital/assets/img/gallery/gallery-8.jpg" },
-    //     ],
-    //   };
-    // },
     setup() {
       return {
         modules: [Autoplay, Pagination, Navigation],

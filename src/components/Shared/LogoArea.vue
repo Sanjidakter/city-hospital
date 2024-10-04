@@ -4,11 +4,14 @@
       <div class="row">
         <!-- Logo Column -->
         <div class="col-xl-3 col-md-3">
-          <img
+          <a :href="sidSite.app_setting?.organization_information?.['website-url']">
+            <img
             :src="sidSite.app_setting?.organization_information?.logo"
             class="img-fluid"
             alt="alt"
+            
           />
+          </a>
         </div>
 
         <!-- Contact Information Column -->
@@ -65,7 +68,7 @@ export default {
   name: "LogoArea",
   data() {
     return {
-      sidSite: [], // Ensure widgets is defined in the data object
+      sidSite: [], // Ensure sidSite is defined in the data object
     };
   },
   async mounted() {
@@ -77,14 +80,9 @@ export default {
       try {
         const storedsidSite = localStorage.getItem("sid_site");
 
-        // console.log("Fetching data from API for sidsite ...");
-        const baseUrl = "http://cityhospital.techecosys.net";
-        let proxyUrl = "https://api.allorigins.win/raw?url=";
-        let url =
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/website/website_api/settings?access_key=123456789`
-          );
+
+        let url = this.$apiBaseUrl+"/website/website_api/settings?access_key="+this.$apiAccessKey ;
+       
 
         const response = await fetch(url, {
           method: "GET",
@@ -106,18 +104,18 @@ export default {
 
           // Compare stringified versions of the data to avoid deep object comparison
           if (JSON.stringify(parsedsidSite) !== JSON.stringify(data.sid_site)) {
-            console.log("Data has changed in sideSite, updating localStorage...");
+            console.log("Data has changed in sidSite, updating localStorage...");
             localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
             this.sidSite = data.sid_site;
           } else {
             console.log(
-              "Data is the same as in localStorage, no update needed."
+              "Data is the same as in localStorage, no update needed for logo area."
             );
             this.sidSite = parsedsidSite;
           }
         } else {
           // If no data in localStorage, set it
-          console.log("No data in localStorage, setting new data...");
+          console.log("No data in localStorage, setting new data for logo area...");
           localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
           this.sidSite = data.sid_site;
         }

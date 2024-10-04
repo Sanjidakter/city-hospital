@@ -1,14 +1,6 @@
-/**
-* Template Name: Medicio
-* Template URL: https://bootstrapmade.com/medicio-free-bootstrap-theme/
-* Updated: Jul 30 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 /*--------------------------------------------------------------
 # Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
@@ -1911,4 +1903,60 @@ section,
 .btn:hover{
   color: var(--contrast-color);
   background: var(--accent-color);
+}
+
+/* Department Details */
+.card-img-top {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+/* Department Doctors */
+.text-orange {
+  color: #f19a2e;
+}
+
+.department-details {
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.department-details:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-5px);
+}
+
+/*********** Album  ***********/
+.gallery-page {
+  padding: 20px;
+}
+
+.album-title {
+  text-align: center;
+}
+
+.albums {
+  margin: 20px 0;
+}
+
+.album-list {
+  display: flex;
+  gap: 20px;
+}
+
+.album {
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.album:hover {
+  transform: scale(1.05);
+}
+
+.album-cover {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
 }

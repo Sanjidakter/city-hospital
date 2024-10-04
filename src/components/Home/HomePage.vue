@@ -19,6 +19,7 @@
           :description="block.description"
           :news="block.widget_element_path === 'LatestNewsHomeSection' ? (console.log('News:', block.items), block.items) : []"
           :services="block.widget_element_path === 'LatestServiceHomeSection' ? (console.log('services:', block.items), block.items) : []"
+          :departments="block.widget_element_path === 'DoctorsHomeSection' ? (console.log('departments:', block.items), block.items) : []"
           :slides="block.widget_element_path === 'GalleryHomeSection' ? (console.log('slides:', block.items), block.items) : []"
         />
         <div v-else v-html="block.description"></div>

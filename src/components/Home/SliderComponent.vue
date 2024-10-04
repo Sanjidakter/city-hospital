@@ -68,9 +68,8 @@ export default {
   },
   methods: {
     loadSliderItems() {
-      const baseUrl =
-        process.env.VUE_APP_BASE_API_URL ||
-        "http://cityhospital.techecosys.net"; // Make sure to check env variable
+      // const baseUrl =
+      //   this.$apiBaseUrl; 
 
       // Check if widgets are stored in localStorage
       const storedWidgets = localStorage.getItem("widgets");
@@ -92,9 +91,9 @@ export default {
             this.sliderItems = sliderItemsArray.map((item) => ({
               id: item.id,
               title: item.title,
-              imageUrl: `${baseUrl}/${item.image}`, // Combine base URL with image path
+              imageUrl: `${this.$apiBaseUrl}/${item.image}`, // Combine base URL with image path
               alias: item.alias,
-              url: `${baseUrl}/${item.url}`, // Ensure URL is absolute
+              url: `${this.$apiBaseUrl}/${item.url}`, // Ensure URL is absolute
             }));
           } else {
             console.error("Slider data is missing or malformed in widgets");

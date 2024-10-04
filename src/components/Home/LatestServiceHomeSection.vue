@@ -5,10 +5,7 @@
       data-aos="fade-up"
     >
       <h2>Latest Services</h2>
-      <p>
-        Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-        consectetur velit
-      </p>
+      <p>Take a look at our services and choose what's best for you.</p>
     </div>
     <div class="container">
       <swiper
@@ -33,7 +30,7 @@
               </div>
               <div class="news_title pt-2">
                 <a :href="slide.url">
-                  <h3>{{ slide.title }}</h3>
+                  <h3>{{ slide.label }}</h3>
                 </a>
 
                 <div>
@@ -46,7 +43,7 @@
         </swiper-slide>
       </swiper>
       <div class="text-center py-5">
-        <a class="btn" href="#">All Services </a>
+        <a class="btn" @click="gotoAllServices">All Services </a>
       </div>
     </div>
   </section>
@@ -80,6 +77,14 @@ export default {
     return {
       modules: [Autoplay, Pagination, Navigation],
     };
+  },
+  methods: {
+    gotoAllServices() {
+      localStorage.setItem("services", JSON.stringify(this.services));
+      this.$router.push({
+        path: "/services",
+      });
+    },
   },
 };
 </script>

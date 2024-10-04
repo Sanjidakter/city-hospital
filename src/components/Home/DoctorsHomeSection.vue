@@ -29,48 +29,31 @@
             </div>
           </a>
         </div>
-        <div class="col-lg-2 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                    <div class=" pt-5">
-                        <div class="text-center pt-4  ">
-                            <a href="/departments" class="btn ">All Departments</a>
-                        </div>
-                    </div>
-                </div> 
+        <div
+          class="col-lg-2 col-md-6 aos-init aos-animate"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="pt-5">
+            <div class="text-center pt-4">
+              <a href="/departments" class="btn">All Departments</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
   </section>
 </template>
 
 <script>
 export default {
   name: "DoctorsHomeSection",
-  data() {
-    return {
-      widgets: [],
-      departments: [],
-    };
+  props: {
+    departments:{
+      type:Array,
+      default:()=>[],
+    }
   },
-  async mounted() {
-    // Call fetchData when the component is mounted
-    await this.fetchData();
-  },
-  methods: {
-    async fetchData() {
-      try {
-        const storedWidgets = localStorage.getItem("widgets");
-
-        if (storedWidgets) {
-          console.log("using data from localstorage for home doctorsDept...");
-          this.widgets = JSON.parse(storedWidgets);
-          this.departments = this.widgets.home_page_block[5].items;
-        } else {
-          console.log("No widgets data in localstorage");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
-  },
+  
 };
 </script>

@@ -47,13 +47,10 @@ export default {
   methods: {
     async fetchDepartmentInfo() {
       try {
-        const baseUrl = "http://cityhospital.techecosys.net";
-        let proxyUrl = "https://api.allorigins.win/get?url=";
+       
         let url =
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/website/website_api/contents/department?access_key=123456789`
-          );
+        this.$apiBaseUrl +`/website/website_api/contents/department?access_key=`+this.$apiAccessKey
+         
 
         const response = await fetch(url, {
           method: "GET",
@@ -69,13 +66,13 @@ export default {
 
         // Parse the response as JSON
         const result = await response.json();
-        const data = JSON.parse(result.contents);
+        const data = result.contents;
 
         // Store fetched data in localStorage
-        localStorage.setItem("departmentContent", JSON.stringify(data.contents));
+        localStorage.setItem("departmentContent", JSON.stringify(data));
 
         // Update component data
-        this.departmentContent = data.contents;
+        this.departmentContent = data
       } catch (error) {
         console.error("Error fetching department data:", error);
       }
@@ -110,18 +107,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text-orange {
-  color: #f19a2e;
-}
 
-.department-details {
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
-}
-
-.department-details:hover {
-  background-color: #f1f1f1;
-  transform: translateY(-5px);
-}
-</style>

@@ -56,6 +56,8 @@
             class="col-lg-3 col-md-3"
             v-for="doctor in doctors"
             :key="doctor.id"
+            @click="redirectToDoctorDetails(doctor.id)"
+            style="cursor: pointer;"
           >
             <div class="team">
               <div class="text-center">
@@ -101,13 +103,10 @@ export default {
   methods: {
     async fetchDepartmentDetail() {
       try {
-        const baseUrl = "http://cityhospital.techecosys.net";
-        let proxyUrl = "https://api.allorigins.win/get?url=";
+      
         let url =
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/website/website_api/contents/department?access_key=123456789`
-          );
+        this.$apiBaseUrl +`/website/website_api/contents/department?access_key=`+this.$apiAccessKey
+         
 
         const response = await fetch(url, {
           method: "GET",
@@ -122,10 +121,11 @@ export default {
         }
 
         const result = await response.json();
-        const data = JSON.parse(result.contents);
+        console.log("result",result)
+        const data = result?.contents;
 
         // Find the department by ID
-        this.department = data.contents.find(
+        this.department = data?.find(
           (department) => department.id == this.id
         );
         // Once the department details are fetched, call fetchDepartmentDoctors
@@ -138,13 +138,10 @@ export default {
     },
     async fetchDepartmentDoctors(departmentId) {
       try {
-        const baseUrl = "http://cityhospital.techecosys.net";
-        let proxyUrl = "https://api.allorigins.win/get?url=";
+        
         let url =
-          proxyUrl +
-          encodeURIComponent(
-            `${baseUrl}/pip/pip_api/doctors?website_content_id=${departmentId}&access_key=123456789`
-          );
+        this.$apiBaseUrl +`/pip/pip_api/doctors?website_content_id=${departmentId}&access_key=${this.$apiAccessKey}`
+         
 
         const response = await fetch(url, {
           method: "GET",
@@ -172,6 +169,10 @@ export default {
         console.error("Error fetching doctors details:", error);
       }
     },
+
+    redirectToDoctorDetails(doctorId){
+      this.$router.push({name:"DoctorDetails",params:{id:doctorId}})
+    }
   },
   mounted() {
     this.fetchDepartmentDetail();
@@ -180,13 +181,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
-  max-width: 800px;
-  margin: auto;
-}
-.card-img-top {
-  max-height: 400px;
-  object-fit: cover;
-}
-</style>

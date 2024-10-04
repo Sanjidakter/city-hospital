@@ -68,8 +68,7 @@ export default {
               (item) => item.children || []
             );
 
-            const baseUrl = "http://cityhospital.techecosys.net";
-            let proxyUrl = "https://api.allorigins.win/raw?url=";
+            
             this.childrenItems = childrenItemsArray.map((child) => ({
               id: child.id,
               parentId: child.parentId,
@@ -77,10 +76,8 @@ export default {
               label: child.label,
               link: child.link,
               url:
-                proxyUrl +
-                encodeURIComponent(
-                  `${baseUrl}/website/website_api/content/${child.link}?access_key=123456789&debug=1`
-                ),
+              this.$apiBaseUrl +`/website/website_api/content/${child.link}?access_key=${this.$apiAccessKey}&debug=1`
+               
             }));
 
             this.matchingItem = this.childrenItems.find((child) => {

@@ -5,10 +5,7 @@
       data-aos="fade-up"
     >
       <h2>Latest News</h2>
-      <p>
-        Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-        consectetur velit
-      </p>
+      <p>Know What's new happening in our hospital on this section.</p>
     </div>
     <!-- End Section Title -->
 
@@ -25,8 +22,10 @@
               <img class="img-fluid" :src="newsItem.image_url" alt="alt" />
             </div>
             <div class="news_title pt-2">
-              <a :href="newsItem.url"><h3>{{ newsItem.title }}</h3></a>
-              
+              <a :href="newsItem.url"
+                ><h3>{{ newsItem.title }}</h3></a
+              >
+
               <div>
                 <p v-html="newsItem.fulltext"></p>
               </div>
@@ -36,15 +35,12 @@
         </div>
       </div>
       <div class="text-center py-5">
-        <a class="btn" href="#">All News</a>
+        <a class="btn" @click="gotoAllNews" href="/news">All News</a>
       </div>
     </div>
   </section>
 </template>
 <script>
-
-
-
 export default {
   name: "LatestNewsHomeSection",
   props: {
@@ -53,6 +49,13 @@ export default {
       default: () => [],
     },
   },
- 
+  methods: {
+    gotoAllNews() {
+      localStorage.setItem("news", JSON.stringify(this.news));
+      this.$router.push({
+        path: "/news",
+      });
+    },
+  },
 };
 </script>
