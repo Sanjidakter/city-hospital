@@ -16,16 +16,16 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   { path: "/", component: HomePage },
   { path: "/contact-us", component: ContactUs },
+  {
+    path: "/appointmentt", 
+    component: MakeAppointment,
+  },
   { path: "/departments", component: DepartmentDoctor },
   {
     path: '/department/:id', // Define the path with the dynamic parameter
     name: 'DepartmentDetails', // Name of the route
     component: DepartmentDetails, // Component to render
     props: true, // Pass route params as props to the component
-  },
-  {
-    path: "/appointmentt", 
-    component: MakeAppointment,
   },
   {
     path: "/doctors", 

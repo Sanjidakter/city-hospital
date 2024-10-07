@@ -1,12 +1,13 @@
 <template>
-  <div class="logo_area py-4">
+  <div v-if="!loading">
+    <div class="logo_area py-4">
     <div class="container">
       <div class="row">
         <!-- Logo Column -->
-        <div class="col-xl-3 col-md-3">
-          <a :href="sidSite.app_setting?.organization_information?.['website-url']">
+        <div class="col-xl-5 col-md-3">
+          <a href="/">
             <img
-            :src="sidSite.app_setting?.organization_information?.logo"
+            :src="sidSite?.app_setting?.organization_information?.logo"
             class="img-fluid"
             alt="alt"
             
@@ -16,9 +17,10 @@
 
         <!-- Contact Information Column -->
         <div
-          class="col-xl-9 col-md-9 d-flex align-items-center justify-content-end"
+          class="col-xl-7 col-md-7 d-flex mobile_view"
         >
-          <ul class="top_contact list-unstyled mb-0 d-flex">
+        
+          <ul class="top_contact d-flex">
             <!-- Phone Number -->
             <li class="phone pe-3">
               <div class="has-icon d-flex align-items-center">
@@ -26,7 +28,7 @@
                   <i class="fa fa-phone"></i>
                 </div>
                 <div>
-                  {{ sidSite.app_setting?.organization_information?.mobile }}
+                  {{ sidSite?.app_setting?.organization_information?.mobile }}
                 </div>
               </div>
             </li>
@@ -37,7 +39,7 @@
                   <i class="fa fa-map-marker-alt"></i>
                 </div>
                 <div>
-                  {{ sidSite.app_setting?.organization_information?.address }}
+                  {{ sidSite?.app_setting?.organization_information?.address }}
                 </div>
               </div>
             </li>
@@ -49,7 +51,7 @@
                 </div>
                 <div>
                   {{
-                    sidSite.app_setting?.organization_information?.[
+                    sidSite?.app_setting?.organization_information?.[
                       "contact-email"
                     ]
                   }}
@@ -61,6 +63,8 @@
       </div>
     </div>
   </div>
+  </div>
+  <div v-else>loading ....</div>
 </template>
 
 <script>
@@ -68,7 +72,8 @@ export default {
   name: "LogoArea",
   data() {
     return {
-      sidSite: [], // Ensure sidSite is defined in the data object
+      sidSite: [], 
+      loading: true,
     };
   },
   async mounted() {
@@ -77,50 +82,42 @@ export default {
   },
   methods: {
     async fetchData() {
-      try {
-        const storedsidSite = localStorage.getItem("sid_site");
+      let storedsidSite = localStorage.getItem("sid_site");
+      const parsedsidSite = storedsidSite
+        ? JSON.parse(storedsidSite)
+        : null;
 
+      // Use stored widgets if found, else fetch from API
+      if (parsedsidSite) {
+        // console.log("Using data from localStorage for sid_site...");
+        this.sidSite = parsedsidSite;
+        this.loading = false;
+      } else {
+        try {
+          const baseUrl = this.$apiBaseUrl;
+          const accessKey = this.$apiAccessKey;
+          const url = `${baseUrl}/website/website_api/settings?access_key=${accessKey}`;
 
-        let url = this.$apiBaseUrl+"/website/website_api/settings?access_key="+this.$apiAccessKey ;
-       
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          });
 
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Compare API data with localStorage data
-        if (storedsidSite) {
-          const parsedsidSite = JSON.parse(storedsidSite);
-
-          // Compare stringified versions of the data to avoid deep object comparison
-          if (JSON.stringify(parsedsidSite) !== JSON.stringify(data.sid_site)) {
-            console.log("Data has changed in sidSite, updating localStorage...");
-            localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
-            this.sidSite = data.sid_site;
-          } else {
-            console.log(
-              "Data is the same as in localStorage, no update needed for logo area."
-            );
-            this.sidSite = parsedsidSite;
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
           }
-        } else {
-          // If no data in localStorage, set it
-          console.log("No data in localStorage, setting new data for logo area...");
-          localStorage.setItem("sid_site", JSON.stringify(data.sid_site)); // Use "sid_site" as key
+
+          const data = await response.json();
           this.sidSite = data.sid_site;
+          localStorage.setItem("sid_site", JSON.stringify(data.sid_site));
+          this.loading = false;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          this.loading = false;
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
       }
     },
   },
