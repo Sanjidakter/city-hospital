@@ -50,7 +50,9 @@ export default {
     },
   },
   data() {
-    return { items: [] };
+    return {
+      items: [],
+    };
   },
   methods: {
     async fetchContent() {
@@ -59,22 +61,24 @@ export default {
           this.$apiBaseUrl +
           `/website/website_api/contents/${this.contentType}?access_key=${this.$apiAccessKey}&debug=1`;
 
+        // console.log("Fetching data from:", url);
+
         const response = await fetch(url);
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(
             `Error fetching ${this.contentType}: ${response.status}`
           );
-        }
 
-        const result = response.json();
+        const result = await response.json();
         this.items = result.contents;
+        // console.log("Fetched items:", this.items);
       } catch (error) {
-        console.log(`Error fetching ${this.contentType}:`, error);
+        console.error(`Error fetching ${this.contentType}:`, error);
       }
     },
   },
-  mounted(){
-   this.fetchContent();
-  }
+  mounted() {
+    this.fetchContent();
+  },
 };
 </script>

@@ -7,41 +7,44 @@
         >
           <nav id="navmenu" class="navmenu d-flex align-items-center me-auto">
             <ul>
-              <!-- Loop through menu items -->
-              <li
-                v-for="item in menuItems"
-                :key="item.id"
-                class="nav-item"
-                :class="{ dropdown: item.children && item.children.length > 0 }"
-              >
-                <!-- If the item has children, show dropdown -->
-                <template v-if="item.children && item.children.length > 0">
-                  <a
-                    href="#"
-                    class="nav-link dropdown-toggle"
-                    @click.prevent="toggleDropdown"
-                  >
-                    {{ item.label }}
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li
-                      v-for="child in item.children"
-                      :key="child.id"
-                      class="dropdown-item"
-                    >
-                      <router-link :to="`/${child.link}`" @click="closeMobileMenu">{{ child.label }}</router-link>
-                    </li>
-                  </ul>
-                </template>
+  <li
+    v-for="item in menuItems"
+    :key="item.id"
+    class="nav-item"
+    :class="{ dropdown: item.children && item.children.length > 0 }"
+  >
+    <!-- If the item has children, show dropdown -->
+    <template v-if="item.children && item.children.length > 0">
+      <a
+        href="#"
+        class="nav-link dropdown-toggle"
+        @click.prevent="toggleDropdown"
+      >
+        {{ item.label }}
+      </a>
+      <ul class="dropdown-menu">
+        <li
+          v-for="child in item.children"
+          :key="child.id"
+          class="dropdown-item"
+        >
+          <!-- Prefix 'pages/' to dropdown items -->
+          <router-link :to="`/pages/${child.link}`" @click="closeMobileMenu">
+            {{ child.label }}
+          </router-link>
+        </li>
+      </ul>
+    </template>
 
-                <!-- Otherwise, show a regular menu item -->
-                <template v-else>
-                  <router-link :to="`/${item.link}`" class="nav-link" @click="closeMobileMenu">
-                    {{ item.label }}
-                  </router-link>
-                </template>
-              </li>
-            </ul>
+    <!-- Otherwise, show a regular menu item without prefix -->
+    <template v-else>
+      <router-link :to="`/${item.link}`" class="nav-link" @click="closeMobileMenu">
+        {{ item.label }}
+      </router-link>
+    </template>
+  </li>
+</ul>
+
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
 

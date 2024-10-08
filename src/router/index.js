@@ -1,63 +1,55 @@
 import ContactUs from "@/components/Home/ContactUs.vue";
 import HomePage from "@/components/Home/HomePage.vue";
-import AllNews from "@/views/AllNews.vue";
-import AllServices from "@/views/AllServices.vue";
-import BlogList from "@/views/BlogList.vue";
+import ContentsPage from "@/views/WebsiteContents.vue";
 import DepartmentDetails from "@/views/DepartmentDetails.vue";
 import DepartmentDoctor from "@/views/DepartmentDoctor.vue";
 import DoctorDetails from "@/views/DoctorDetails.vue";
 import DoctorsList from "@/views/DoctorsList.vue";
-import DynamicPage from "@/views/DynamicPage.vue";
 import GalleryPage from "@/views/GalleryPage.vue";
 import GalleryPhotos from "@/views/GalleryPhotos.vue";
 import MakeAppointment from "@/views/MakeAppointment.vue";
+import SinglePage from "@/views/SinglePage.vue";
+
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/", component: HomePage },
-  { path: "/contact-us", component: ContactUs },
+  { path: "/", component: HomePage, props: true },
+  { path: "/contact-us", component: ContactUs, props: true },
+  { path: "/departments", component: DepartmentDoctor, props: true },
   {
-    path: "/appointmentt", 
-    component: MakeAppointment,
+    path: "/department/:alias",
+    name: "DepartmentDetails",
+    component: DepartmentDetails,
+    props: true,
   },
-  { path: "/departments", component: DepartmentDoctor },
+  { path: "/appointment", component: MakeAppointment, props: true },
+  { path: "/doctors", component: DoctorsList, props: true },
+  { path: "/gallery", component: GalleryPage, props: true },
+  { path: "/gallery/photos", component: GalleryPhotos, props: true },
   {
-    path: '/department/:id', // Define the path with the dynamic parameter
-    name: 'DepartmentDetails', // Name of the route
-    component: DepartmentDetails, // Component to render
-    props: true, // Pass route params as props to the component
-  },
-  {
-    path: "/doctors", 
-    component: DoctorsList,
-  },
-  {
-    path: "/services", 
-    component: AllServices,
-  },
-  {
-    path: "/news", 
-    component: AllNews,
-  },
-  {
-    path: "/blogs", 
-    component: BlogList,
-  },
-  {
-    path: "/gallery", 
-    component: GalleryPage,
-  },
-  {
-    path: "/gallery/photos", 
-    component: GalleryPhotos,
-  },
-  {
-    path: '/doctors/:id',
-    name: 'DoctorDetails',
+    path: "/doctors/:id",
+    name: "DoctorDetails",
     component: DoctorDetails,
-    props: true, // Pass route params as props
+    props: true,
   },
-  { path: "/:alias", component: DynamicPage, props: true },
+
+  // for Dynamic contents //
+
+  {
+    path: "/:contentType",
+    name: "ContentList",
+    component: ContentsPage,
+    props: (route) => ({
+      contentType: route.params.contentType,
+    }),
+  },
+  // for detailed view 
+  {
+    path: "/:contentType/:alias",
+    name: "SinglePage",
+    component: SinglePage,
+    props: true, // pass route params as props
+  },
 ];
 
 const router = createRouter({

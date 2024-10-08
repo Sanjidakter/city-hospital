@@ -18,6 +18,7 @@ const proxyUrl = "https://api.allorigins.win/raw?url=";
 baseUrl = proxyUrl + baseUrl;
 // Define a global variable (e.g., API base URL)
 app.config.globalProperties.$apiBaseUrl = baseUrl;
+app.config.globalProperties.$clientUrl ='http://localhost:8080/';
 app.config.globalProperties.$apiAccessKey = '123456789';
 
 const head = createHead(); // Create head instance
