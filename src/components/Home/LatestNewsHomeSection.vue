@@ -29,18 +29,21 @@
               <div>
                 <p v-html="newsItem.fulltext"></p>
               </div>
-              <a :href="newsItem.url">Read More&gt;&gt;&gt;</a>
+              <a @click.prevent="gotoNewsDetails(newsItem.alias)">Read More</a>
             </div>
           </div>
         </div>
       </div>
       <div class="text-center py-5">
-        <a class="btn" @click="gotoAllNews" href="/news">All News</a>
+        <a class="btn" @click.prevent="gotoAllNews(news)" href="/news">All News</a>
       </div>
     </div>
   </section>
 </template>
 <script>
+
+import SinglePage from '@/views/SinglePage.vue';
+
 export default {
   name: "LatestNewsHomeSection",
   props: {
@@ -50,10 +53,17 @@ export default {
     },
   },
   methods: {
-    gotoAllNews() {
-      localStorage.setItem("news", JSON.stringify(this.news));
+    gotoAllNews(contentType) {
+    localStorage.setItem("news", JSON.stringify(this.news));
+    this.$router.push({
+      path: "/news",
+      query: { contentType: contentType }  // Pass as query instead of params
+    });
+  },
+    gotoNewsDetails(alias){
       this.$router.push({
-        path: "/news",
+        name:SinglePage,
+        params:{contentType:"news",alias:alias}
       });
     },
   },

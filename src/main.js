@@ -12,10 +12,8 @@ import router from "./router";
 
 const app = createApp(App);
 
-let baseUrl = "http://cityhospital.techecosys.net";
-const proxyUrl = "https://api.allorigins.win/raw?url=";
+let baseUrl = "https://cityhospital.autofyapps.com/";
 
-baseUrl = proxyUrl + baseUrl;
 // Define a global variable (e.g., API base URL)
 app.config.globalProperties.$apiBaseUrl = baseUrl;
 app.config.globalProperties.$clientUrl ='http://localhost:8080/';

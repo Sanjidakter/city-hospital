@@ -4,16 +4,16 @@
       <div class="row">
         <div class="col-md-12 pt-2">
           <h3 class="font-weight-bold">
-            <a href="/doctors" class="text-decoration-none">Doctors</a>
+            <a href="/" class="text-decoration-none">{{ doctor.name }}</a>
           </h3>
 
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="http://cityhospital.techecosys.net/">Home </a>
+              <a href="/">Home </a>
               <span class="divider">&nbsp;</span>
             </li>
             <li class="breadcrumb-item">
-              <a href="http://cityhospital.techecosys.net/pages">Pages</a>
+              <a href="/">Pages</a>
               <span class="divider">&nbsp;</span>
             </li>
             <li class="breadcrumb-item">
@@ -25,23 +25,44 @@
       </div>
     </div>
   </div>
-  <div class="doctor-details mt-4">
-    <div class="container d-flex">
-      <div>
-        <img
-          :src="doctor.image_url || defaultImage"
-          alt="Doctor Image"
-          class="img-fluid"
-        />
-      </div>
-      <div class="m-auto">
-        <h3 class="title">
-          <a href="">{{ doctor.name }}</a>
-        </h3>
-        <p title="Degree">{{ doctor.speciality }}</p>
-        <p><strong>Degree:</strong> {{ doctor.degree }}</p>
+  <div class="doctor-details">
+    <div class="bg-light">
+      <div class="container py-4">
+        <div class="row">
+          <div class="col-md-3 col-sm-12">
+            <div class="profile shadow-lg">
+              <img
+                :src="doctor.image_url || defaultImage"
+                alt="Doctor Image"
+                class="img-fluid"
+              />
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-12">
+            <div class="profile_name p-2">
+              <h4 class="font-weight-bold">
+                <strong>{{ doctor.name }}</strong>
+              </h4>
 
-        <p><strong>available_day</strong> {{ doctor.available_day }}</p>
+              <h4 class="font-weight-bold text-black">
+                Information
+                <hr />
+              </h4>
+              <h4>Degree:</h4>
+              <p title="Degree">
+                {{ doctor.degree }}
+              </p>
+              <h4>Speciality</h4>
+              <p>{{ doctor.speciality }}</p>
+
+              <h3>Visit Time and Fee</h3>
+              <hr />
+
+              <p>Visit Time</p>
+              <p>{{ doctor.available_day }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,7 +81,7 @@ export default {
   methods: {
     async fetchDoctorDetails() {
       const doctorId = this.$route.params.id;
-      let url = `${this.$apiBaseUrl}/pip/pip_api/doctors/${doctorId}?access_key=${this.$apiAccessKey}`;
+      let url = `${this.$apiBaseUrl}pip/pip_api/doctors/${doctorId}?access_key=${this.$apiAccessKey}`;
 
       try {
         const response = await fetch(url);
@@ -83,12 +104,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.doctor-details {
-  /* display: flex; */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full height to allow vertical centering */
-}
-</style>

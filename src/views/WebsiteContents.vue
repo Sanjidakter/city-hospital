@@ -37,13 +37,14 @@
 </template>
 
 <script>
-import PageTitle from "./PageTitle.vue";
+import PageTitle from './PageTitle.vue';
 
 export default {
+
   components: {
     PageTitle,
   },
-  props: {
+    props: {
     contentType: {
       type: String,
       required: true,
@@ -51,6 +52,7 @@ export default {
   },
   data() {
     return {
+      localContentType: this.contentType || 'default',  // Create a local copy
       items: [],
     };
   },
@@ -59,25 +61,26 @@ export default {
       try {
         let url =
           this.$apiBaseUrl +
-          `/website/website_api/contents/${this.contentType}?access_key=${this.$apiAccessKey}&debug=1`;
-
-        // console.log("Fetching data from:", url);
+          `/website/website_api/contents/${this.localContentType}?access_key=${this.$apiAccessKey}&debug=1`;
 
         const response = await fetch(url);
         if (!response.ok)
           throw new Error(
-            `Error fetching ${this.contentType}: ${response.status}`
+            `Error fetching ${this.localContentType}: ${response.status}`
           );
 
         const result = await response.json();
         this.items = result.contents;
-        // console.log("Fetched items:", this.items);
       } catch (error) {
-        console.error(`Error fetching ${this.contentType}:`, error);
+        console.error(`Error fetching ${this.localContentType}:`, error);
       }
     },
   },
   mounted() {
+    const contentTypeFromStorage = localStorage.getItem("contentType");
+    if (contentTypeFromStorage) {
+      this.localContentType = contentTypeFromStorage;
+    }
     this.fetchContent();
   },
 };

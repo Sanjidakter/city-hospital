@@ -51,7 +51,8 @@ export default {
     SliderComponent,
     NoticesSection,
     DefaultSection,
-    LatestNewsHomeSection // Register LatestNewsHomeSection
+    LatestNewsHomeSection ,
+    LatestServiceHomeSection
   },
   data() {
     return {
