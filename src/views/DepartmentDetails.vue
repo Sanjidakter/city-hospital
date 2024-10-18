@@ -1,54 +1,32 @@
 <template>
-  <div  v-if="department">
-    <div class="page_title">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 pt-2">
-            <h3 class="font-weight-bold">{{ department.title }}</h3>
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="http://cityhospital.techecosys.net/">Home </a>
-                <span class="divider">&nbsp;</span>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="http://cityhospital.techecosys.net/pages">Pages</a>
-                <span class="divider">&nbsp;</span>
-              </li>
-              <li class="breadcrumb-item">
-                {{ department.alias }}
-                <span class="divider-last">&nbsp;</span>
-              </li>
-            </ul>
+  <div v-if="department">
+    <PageTitle :title="department.title" :alias="department.alias" />
+    <div class="container py-4">
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <div class="image">
+            <img
+              v-if="department.image_url"
+              :src="department.image_url"
+              class="img-fluid"
+              alt="Featured Image"
+            />
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+          <div class="details">
+            <h6>{{ department.sub_title }}</h6>
+            <p class="card-text" v-html="department.fulltext"></p>
           </div>
         </div>
       </div>
     </div>
-    <div class="card container p-4">
-      <img
-        v-if="department.image_url"
-        :src="department.image_url"
-        class="card-img-top"
-        alt="Featured Image"
-      />
-      <div class="card-body text-center">
-        <h1>{{ department.id }}</h1>
-        <h5 class="card-title">{{ department.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-          {{ department.sub_title || "No subtitle available" }}
-        </h6>
-        <p class="card-text" v-html="department.fulltext"></p>
-        <p class="card-text">
-          <strong>Category:</strong> {{ department.category_title }} <br />
-          <strong>Total Views:</strong> {{ department.total_view }} <br />
-          <strong>Updated:</strong> {{ department.updated }} <br />
-          <strong>Publish Date:</strong> {{ department.publish_date }} <br />
-          <strong>Status:</strong> {{ department.status }}
-        </p>
-      </div>
-    </div>
 
     <!-- Display doctors section -->
-    <div class="doctors-section container mt-5" v-if="doctors && doctors.length">
+    <div
+      class="doctors-section container mt-5"
+      v-if="doctors && doctors.length"
+    >
       <h3 class="m-4">Doctors in this Department</h3>
       <div class="container">
         <div class="row gy-4">
@@ -57,18 +35,24 @@
             v-for="doctor in doctors"
             :key="doctor.id"
             @click="redirectToDoctorDetails(doctor.id)"
-            style="cursor: pointer;"
           >
-            <div class="team">
-              <div class="text-center">
+            <div class="team_member">
+              <div class="team_img">
                 <img
                   class="img-fluid"
                   src="http://cityhospital.techecosys.net//includes/themes/primary/hospital/hospital/assets/img/doctors.png"
                   alt=""
                 />
-                <div class="pt-1">
+              </div>
+              <div class="team_details text-center">
+                <div class="team_name py-2">
                   <strong>{{ doctor.name }}</strong>
+                </div>
+                <div class="details">
                   <p>{{ doctor.degree }}</p>
+                </div>
+                <div class="text-center button_profile py-3">
+                  <a href="#"> view Profile</a>
                 </div>
               </div>
             </div>
@@ -80,8 +64,13 @@
 </template>
 
 <script>
+import PageTitle from "./PageTitle.vue";
+
 export default {
   name: "DepartmentDetails",
+  components: {
+    PageTitle,
+  },
   props: {
     id: {
       type: String,
@@ -103,10 +92,10 @@ export default {
   methods: {
     async fetchDepartmentDetail() {
       try {
-      
         let url =
-        this.$apiBaseUrl +`/website/website_api/contents/department?access_key=`+this.$apiAccessKey
-         
+          this.$apiBaseUrl +
+          `website/website_api/contents/department?access_key=` +
+          this.$apiAccessKey;
 
         const response = await fetch(url, {
           method: "GET",
@@ -121,14 +110,14 @@ export default {
         }
 
         const result = await response.json();
-        console.log("result",result)
-        const data = result?.contents;
+        const data = result.contents;
 
-        // Find the department by ID
+        // Find the department by alias
         this.department = data?.find(
-          (department) => department.id == this.id
+          (department) => department.alias == this.$route.params.alias
         );
-        // Once the department details are fetched, call fetchDepartmentDoctors
+
+        // Fetch doctors if the department is found
         if (this.department && this.department.id) {
           this.fetchDepartmentDoctors(this.department.id);
         }
@@ -138,10 +127,9 @@ export default {
     },
     async fetchDepartmentDoctors(departmentId) {
       try {
-        
         let url =
-        this.$apiBaseUrl +`/pip/pip_api/doctors?website_content_id=${departmentId}&access_key=${this.$apiAccessKey}`
-         
+          this.$apiBaseUrl +
+          `pip/pip_api/doctors?website_content_id=${departmentId}&access_key=${this.$apiAccessKey}`;
 
         const response = await fetch(url, {
           method: "GET",
@@ -170,9 +158,9 @@ export default {
       }
     },
 
-    redirectToDoctorDetails(doctorId){
-      this.$router.push({name:"DoctorDetails",params:{id:doctorId}})
-    }
+    redirectToDoctorDetails(doctorId) {
+      this.$router.push({ name: "DoctorDetails", params: { id: doctorId } });
+    },
   },
   mounted() {
     this.fetchDepartmentDetail();
@@ -180,4 +168,3 @@ export default {
   },
 };
 </script>
-

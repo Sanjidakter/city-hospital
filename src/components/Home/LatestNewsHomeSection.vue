@@ -14,36 +14,59 @@
         <div
           v-for="(newsItem, index) in news"
           :key="index"
-          class="col-lg-4 col-md-4 aos-init aos-animate"
+          class="news-card col-lg-4 col-md-4 aos-init aos-animate"
           data-aos="fade-up"
         >
-          <div class="news_section">
-            <div class="image_section">
-              <img class="img-fluid" :src="newsItem.image_url" alt="alt" />
+          <div class="news_member">
+            <div class="news_img">
+              <img
+                class="img-fluid"
+                style="width: 100%; height: 300px"
+                :src="`${newsItem.image_url}`"
+                alt="alt"
+              />
             </div>
-            <div class="news_title pt-2">
-              <a :href="newsItem.url"
-                ><h3>{{ newsItem.title }}</h3></a
-              >
-
-              <div>
-                <p v-html="newsItem.fulltext"></p>
+            <div class="team_details text-center">
+              <a :href="'news/' + newsItem.alias">
+                <h4
+                  style="
+                    color: white;
+                    font-family: Montserrat;
+                    font-weight: 600;
+                    font-size: 16px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* Limit to 2 lines */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  "
+                >
+                  {{ newsItem.title }}
+                </h4>
+              </a>
+              <div class="text-center button_profile py-3">
+                <a
+                  @click.prevent="goToNewsDetails(newsItem.alias)"
+                  class="btn btn-main btn-icon btn-round-full"
+                >
+                  Read More
+                </a>
               </div>
-              <a @click.prevent="gotoNewsDetails(newsItem.alias)">Read More</a>
             </div>
+          </div>
+
+          <div class="mt-4">
+            <p v-html="truncateText(newsItem.fulltext, 50)"></p>
           </div>
         </div>
       </div>
       <div class="text-center py-5">
-        <a class="btn" @click.prevent="gotoAllNews(news)" href="/news">All News</a>
+        <a class="all-btn" @click="gotoAllNews">All News</a>
       </div>
     </div>
   </section>
 </template>
 <script>
-
-import SinglePage from '@/views/SinglePage.vue';
-
 export default {
   name: "LatestNewsHomeSection",
   props: {
@@ -53,18 +76,28 @@ export default {
     },
   },
   methods: {
-    gotoAllNews(contentType) {
-    localStorage.setItem("news", JSON.stringify(this.news));
-    this.$router.push({
-      path: "/news",
-      query: { contentType: contentType }  // Pass as query instead of params
-    });
-  },
-    gotoNewsDetails(alias){
+    goToNewsDetails(alias) {
       this.$router.push({
-        name:SinglePage,
-        params:{contentType:"news",alias:alias}
+        name: "SinglePage",
+        params: { contentType: "news", alias: alias },
       });
+    },
+    gotoAllNews() {
+      this.$router.push({
+        path: "/news",
+      });
+    },
+    truncateText(html, wordLimit) {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      const textContent = div.textContent || div.innerText || "";
+
+      const words = textContent.split(/\s+/);
+      if (words.length > wordLimit) {
+        const truncated = words.slice(0, wordLimit).join(" ") + "...";
+        return truncated;
+      }
+      return html;
     },
   },
 };

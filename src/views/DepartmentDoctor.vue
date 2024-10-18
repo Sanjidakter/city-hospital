@@ -10,8 +10,8 @@
           :key="department.id"
         >
           <div class="department-details p-3 border rounded">
-            <div class="team_img p-2">
-              <i class="fas fa-stethoscope"></i>
+            <div class="p-2">
+              <i style="font-size: 45px; text-align: center;" class="fas fa-stethoscope"></i>
             </div>
             <h5 class="text-center">{{ department.title }}</h5>
             <div>

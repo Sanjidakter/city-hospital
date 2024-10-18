@@ -10,7 +10,7 @@
         <!-- Conditionally render LatestNewsHomeSection or raw HTML description -->
         <component
           v-if="block.widget_element_path === 'LatestNewsHomeSection' ||
-                 block.widget_element_path === 'LatestServiceHomeSection' ||
+                //  block.widget_element_path === 'LatestServiceHomeSection' ||
                  block.widget_element_path === 'DoctorsHomeSection' ||
                  block.widget_element_path === 'StatsHomeSection' ||
                  block.widget_element_path === 'GalleryHomeSection'"
@@ -18,7 +18,7 @@
           :title="block.title"
           :description="block.description"
           :news="block.widget_element_path === 'LatestNewsHomeSection' ? (console.log('News:', block.items), block.items) : []"
-          :services="block.widget_element_path === 'LatestServiceHomeSection' ? (console.log('services:', block.items), block.items) : []"
+          
           :departments="block.widget_element_path === 'DoctorsHomeSection' ? (console.log('departments:', block.items), block.items) : []"
           :slides="block.widget_element_path === 'GalleryHomeSection' ? (console.log('slides:', block.items), block.items) : []"
         />
@@ -37,9 +37,9 @@
 import SliderComponent from './SliderComponent.vue';
 import NoticesSection from './NoticesSection.vue';
 import DefaultSection from './DefaultSection.vue';
-import LatestNewsHomeSection from './LatestNewsHomeSection.vue'; // Import LatestNewsHomeSection
+import LatestNewsHomeSection from './LatestNewsHomeSection.vue'; 
 import GalleryHomeSection from './GalleryHomeSection.vue';
-import LatestServiceHomeSection from './LatestServiceHomeSection.vue';
+// import LatestServiceHomeSection from './LatestServiceHomeSection.vue';
 import DoctorsHomeSection from './DoctorsHomeSection.vue';
 import StatsHomeSection from './StatsHomeSection.vue';
 import { markRaw } from 'vue';
@@ -52,7 +52,7 @@ export default {
     NoticesSection,
     DefaultSection,
     LatestNewsHomeSection ,
-    LatestServiceHomeSection
+    // LatestServiceHomeSection
   },
   data() {
     return {
@@ -108,9 +108,9 @@ export default {
       if (widget_element_path === 'LatestNewsHomeSection') {
         return markRaw(LatestNewsHomeSection);
       }
-      if (widget_element_path === 'LatestServiceHomeSection') {
-        return markRaw(LatestServiceHomeSection);
-      }
+      // if (widget_element_path === 'LatestServiceHomeSection') {
+      //   return markRaw(LatestServiceHomeSection);
+      // }
       if (widget_element_path === 'GalleryHomeSection') {
         return markRaw(GalleryHomeSection);
       }

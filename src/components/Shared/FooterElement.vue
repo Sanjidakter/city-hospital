@@ -1,4 +1,5 @@
 <template>
+<div v-if="!loading">
   <footer class="">
     <footer id="footer" class="footer bg-light text-dark">
       <div class="container pt-5">
@@ -6,7 +7,7 @@
           <div class="col-lg-4 col-md-6 footer-about">
             <a href="index.html" class="logo d-flex align-items-center">
               <span class="sitename">{{
-                sidSite.app_setting?.organization_information?.name
+                sidSite?.app_setting?.organization_information?.name
               }}</span>
             </a>
             <div class="footer-contact mb-1 pt-3">
@@ -96,6 +97,7 @@
       </div>
     </footer>
   </footer>
+</div>
 </template>
 
 <script>
@@ -103,7 +105,8 @@ export default {
   name: "FooterElement",
   data() {
     return {
-      sidSite: [], // Ensure widgets is defined in the data object
+      sidSite: [], 
+      loading:true,
     };
   },
   async mounted() {
@@ -123,6 +126,8 @@ export default {
         this.sidSite = parsedsidSite;
       } catch (error) {
         console.error("Error fetching sidSite data for footer:", error);
+      }finally{
+        this.loading = false;
       }
     },
   },

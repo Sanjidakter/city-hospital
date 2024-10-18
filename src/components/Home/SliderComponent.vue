@@ -13,7 +13,7 @@
         :class="{ active: index === 0 }"
       >
         <!-- Image with correct binding -->
-        <img :src="item.imageUrl" class="d-block w-100" :alt="item.title" />
+        <img rel=preload fetchpriority=high :src="item.imageUrl" class="d-block w-100" :alt="item.title" />
       </div>
 
       <a
